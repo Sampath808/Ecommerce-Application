@@ -1,0 +1,21 @@
+.h1 {
+  font-family: fantasy;
+}
+
+.card {
+  min-width: 300px;
+  min-height: 300px;
+  margin-bottom: 0;
+  border: 20px #29ba3a;
+  padding: 2px;
+  /* justify-content: center;
+  text-align: center; */
+  align-items: center;
+}
+
+.container {
+  max-width: fit-content;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5rem;
+}
