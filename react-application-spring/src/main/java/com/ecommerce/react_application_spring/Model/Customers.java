@@ -12,6 +12,7 @@ public class Customers {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotBlank
     @Size(min = 1, message = "is required")
     private String userName;
 

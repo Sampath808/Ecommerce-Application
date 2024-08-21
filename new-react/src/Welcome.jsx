@@ -1,13 +1,17 @@
 import React from "react";
 import "./index.css";
+import { Link } from "react-router-dom";
 
 function Welcome() {
   return (
     <>
       <h1>Click this button!</h1>
-      <link className="btn btn-outline-danger" to="/addcustomer">
+      <Link className="btn btn-outline-danger" to="/addcustomer">
         Add User
-      </link>
+      </Link>
+      <Link className="btn btn-outline-danger" to="/home">
+        Take me Home
+      </Link>
     </>
   );
 }

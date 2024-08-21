@@ -1,0 +1,5 @@
+{
+  "java.compile.nullAnalysis.mode": "disabled",
+  "terminal.integrated.cwd": "E:/Ecommerce_Application",
+  "java.configuration.updateBuildConfiguration": "automatic"
+}

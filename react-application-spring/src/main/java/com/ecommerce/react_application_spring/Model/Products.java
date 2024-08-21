@@ -10,17 +10,17 @@ public class Products {
     @GeneratedValue
     private Long productId;
     private String name;
-    private double price;
-    private String imgUrl;
+    private double sellingPrice;
+    private String imgName;
     private String priceTag;
 
    
 
-    public Long getproductId() {
+    public Long getProductId() {
         return productId;
     }
 
-    public void setproductId(Long productId) {
+    public void setProductId(Long productId) {
         this.productId = productId;
     }
 
@@ -32,28 +32,28 @@ public class Products {
         this.name = name;
     }
 
-    public double getPrice() {
-        return price;
+    public double getSellingPrice() {
+        return sellingPrice;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setSellingPrice(double sellingPrice) {
+        this.sellingPrice = sellingPrice;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public String getImgName() {
+        return imgName;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setImgName(String imgName) {
+        this.imgName = imgName;
     }
     
     public String getPriceTag() {
         return priceTag;
     }
 
-    public void setPriceTag(String description) {
+    public void setPriceTag(String priceTag) {
         this.priceTag = priceTag;
     }
-    
+
 }
