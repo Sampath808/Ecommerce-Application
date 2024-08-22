@@ -1,11 +1,11 @@
 import "./index.css";
 import React from "react";
-function Card({ product, source }) {
+function Card({ product }) {
   return (
     <>
       <div className="card">
         <img
-          src={source}
+          src={product.imgUrl}
           alt={product.name}
           className="rounded"
           width="250"

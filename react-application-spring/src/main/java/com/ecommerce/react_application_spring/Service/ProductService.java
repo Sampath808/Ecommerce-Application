@@ -27,7 +27,7 @@ public class ProductService {
         productsDTO.setPrice(product.getSellingPrice());
         productsDTO.setPriceTag(product.getPriceTag());
         productsDTO.setProductId(product.getProductId());
-        // productsDTO.setImgUrl(imagesPath + product.getImgName());
+        productsDTO.setImgUrl(product.getImgName());
         return productsDTO; 
     }
     

@@ -1,4 +1,5 @@
 import Cards from "./Cards";
+import ImageUploader from "./ImageUploader";
 import "./index.css";
 import Navbar from "./Navbar";
 
