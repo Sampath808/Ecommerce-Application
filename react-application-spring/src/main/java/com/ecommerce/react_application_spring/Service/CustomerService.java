@@ -12,10 +12,16 @@ public class CustomerService {
     @Autowired
     private CustomersRepository customersRepository;
 
+
     public List<Customers> getAllCustomers(){
         return customersRepository.findAll();
     }
 
+    /**
+     * 
+     * @param theId
+     * @return
+     */
     public Optional<Customers> getOneCustomer(int theId){
         return customersRepository.findById(theId);
     }

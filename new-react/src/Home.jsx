@@ -1,7 +1,7 @@
 import Cards from "./Cards";
-import ImageUploader from "./ImageUploader";
 import "./index.css";
 import Navbar from "./Navbar";
+import ProductsList from "./Redux_Components/ProductsList";
 
 function Home() {
   return (
@@ -13,6 +13,7 @@ function Home() {
       <div className="container">
         <Cards></Cards>
       </div>
+      <ProductsList></ProductsList>
     </>
   );
 }
