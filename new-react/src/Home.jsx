@@ -10,10 +10,10 @@ function Home() {
         Welcome to The Rice Shop
       </h1>
       <Navbar></Navbar>
+      <ProductsList></ProductsList>
       <div className="container">
         <Cards></Cards>
       </div>
-      <ProductsList></ProductsList>
     </>
   );
 }

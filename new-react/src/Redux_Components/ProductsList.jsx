@@ -4,7 +4,9 @@ import { useSelector, useDispatch } from "react-redux";
 
 const ProductsList = () => {
   const dispatch = useDispatch();
-  const { products, loading, error } = useSelector((state) => state.products);
+  const { products, loading, error } = useSelector(
+    (state) => state.initialState
+  );
 
   useEffect(() => {
     dispatch(fetchProducts());
