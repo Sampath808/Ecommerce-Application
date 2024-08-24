@@ -1,7 +1,7 @@
 import Cards from "./Cards";
 import "./index.css";
 import Navbar from "./Navbar";
-import ProductsList from "./Redux_Components/ProductsList";
+import ProductsList from "./ProductsList";
 
 function Home() {
   return (
