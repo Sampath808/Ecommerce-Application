@@ -1,16 +1,11 @@
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
+import React from "react";
 
-function CartCard() {
+function CartCard({ item }) {
   return (
-    <Card>
-      <Card.Body>
-        <Card.Title>product.name</Card.Title>
-        <Card.Text>product.priceTag </Card.Text>
-        <Button variant="primary">+</Button>
-        <Button variant="primary">-</Button>
-      </Card.Body>
-    </Card>
+    <div className="card">
+      <p>{item.name}</p>
+      <p>{item.priceTag}</p>
+    </div>
   );
 }
 
