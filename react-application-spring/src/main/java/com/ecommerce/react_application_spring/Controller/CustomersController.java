@@ -25,12 +25,12 @@ public class CustomersController {
     }
 
     @GetMapping("/customer/{id}")
-    public Optional<Customers> getProductById(@PathVariable int id){
+    public Optional<Customers> getProductById(@PathVariable Long id){
         return  customerService.getOneCustomer(id);
     }
 
     @DeleteMapping("/deleteCustomer/{id}")
-    public void deleteCustomer(@PathVariable int id){
+    public void deleteCustomer(@PathVariable Long id){
         customerService.deleteCustomer(id);
     }
 }

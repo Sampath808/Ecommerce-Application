@@ -16,8 +16,6 @@ public class ProductsController {
     @Autowired
     private ProductService productService;
     
-    
-    
     @Value("${imagesPath}")
     private String imagesPath;
 

@@ -1,18 +1,16 @@
-import Cards from "./Cards";
 import "./index.css";
-import Navbar from "./Navbar";
+import AppNavbar from "./AppNavbar";
+import "bootstrap/dist/css/bootstrap.min.css";
 import ProductsList from "./ProductsList";
+import CartIcon from "./CartIcon";
 
 function Home() {
   return (
     <>
-      <h1 className="text-center bg-success-subtle">
-        Welcome to The Rice Shop
-      </h1>
-      <Navbar></Navbar>
-      <ProductsList></ProductsList>
+      <AppNavbar />
+      <CartIcon />
       <div className="container">
-        <Cards></Cards>
+        <ProductsList />
       </div>
     </>
   );

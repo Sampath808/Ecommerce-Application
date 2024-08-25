@@ -17,12 +17,7 @@ public class CustomerService {
         return customersRepository.findAll();
     }
 
-    /**
-     * 
-     * @param theId
-     * @return
-     */
-    public Optional<Customers> getOneCustomer(int theId){
+    public Optional<Customers> getOneCustomer(Long theId){
         return customersRepository.findById(theId);
     }
 
@@ -30,7 +25,7 @@ public class CustomerService {
         return  customersRepository.save(theCustomer);
     }
 
-    public void deleteCustomer(int theId){
+    public void deleteCustomer(Long theId){
         customersRepository.deleteById(theId);
     }
 }

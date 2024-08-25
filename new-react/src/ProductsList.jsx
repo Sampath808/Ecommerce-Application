@@ -1,22 +1,32 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchProducts } from "./State/actions";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "./state/productsSlice";
+import Card from "./Card";
 
 const ProductsList = () => {
   const dispatch = useDispatch();
-  const { products, loading, error } = useSelector((state) => state);
+  const { products, status, error } = useSelector((state) => state.products);
 
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
+    if (status === "idle") {
+      dispatch(fetchProducts());
+    }
+  }, [status, dispatch]);
 
-  // if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+
+  if (status === "failed") {
+    return <div>Error: {error}</div>;
+  }
 
   return (
-    <ul>
-      {products && products.map((p) => <li key={p.productId}>{p.name}</li>)}
-    </ul>
+    <>
+      {products.map((product, index) => (
+        <Card key={index} product={product}></Card>
+      ))}
+    </>
   );
 };
 

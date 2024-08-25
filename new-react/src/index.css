@@ -19,3 +19,9 @@
   flex-wrap: wrap;
   gap: 5rem;
 }
+
+.cartIcon {
+  float: inline-end;
+  font-size: 80px;
+  color: black;
+}

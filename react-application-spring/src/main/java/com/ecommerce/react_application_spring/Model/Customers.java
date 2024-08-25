@@ -10,24 +10,17 @@ import jakarta.validation.constraints.*;
 public class Customers {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
+    private Long id;
     @NotBlank
     @Size(min = 1, message = "is required")
     private String userName;
-
     @Pattern(regexp = "^[0-9]{10}",message = "enter a valid phone number")
     private String phoneNo;
-
-
     @Email(message="enter a valid e-mail")
     private String email;
-
     @Size(min = 8, message = "is required")
     private String newPassword;
-
     private String rePassword;
-
     private String state;
 
     public Customers(String userName, String phoneNo, String email, String newPassword, String state) {
@@ -90,16 +83,11 @@ public class Customers {
         this.newPassword = newPassword;
     }
 
-//    @AssertTrue(message = "Passwords should match")
-//    public boolean isPasswordsEqual() {
-//        return newPassword.equals(rePassword);
-//    }
-
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
