@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import "./index.css";
 import { useDispatch } from "react-redux";
-import { addToCart } from "./state/cartSlice";
+import { addToCart, removeCartItem } from "./state/cartSlice";
 
 function CartCard({ item }) {
   const dispatch = useDispatch();
@@ -28,6 +28,16 @@ function CartCard({ item }) {
     );
   };
 
+  const handleRemove = () => {
+    dispatch(
+      removeCartItem({
+        customerId: 1,
+        productId: item.product.productId,
+        quantity: item.quantity,
+      })
+    );
+  };
+
   return (
     <Card>
       <Card.Body>
@@ -39,6 +49,9 @@ function CartCard({ item }) {
         <p className="box">{item.quantity}</p>
         <Button onClick={() => handleDecrement()} variant="primary">
           -
+        </Button>
+        <Button onClick={() => handleRemove()} variant="primary">
+          Remove
         </Button>
       </Card.Body>
     </Card>

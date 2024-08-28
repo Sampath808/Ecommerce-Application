@@ -21,7 +21,8 @@ export const addToCart = createAsyncThunk(
       if (
         !customerId ||
         !productId ||
-        !(quantity != null && quantity != undefined)
+        quantity == null ||
+        quantity == undefined
       ) {
         throw new Error("Missing required parameters.");
       }
@@ -36,6 +37,29 @@ export const addToCart = createAsyncThunk(
       return rejectWithValue(
         exception.response?.data || "Failed to add to cart"
       );
+    }
+  }
+);
+
+export const removeCartItem = createAsyncThunk(
+  "cart/removeCartItem",
+  async ({ customerId, productId, quantity }) => {
+    try {
+      if (
+        !customerId ||
+        !productId ||
+        quantity == null ||
+        quantity == undefined
+      ) {
+        throw new Error("Missing required parameters.");
+      }
+      await axios.delete("http://localhost:8080/cartItem/delete", {
+        customerId,
+        productId,
+        quantity,
+      });
+    } catch (exception) {
+      console.error(exception.message);
     }
   }
 );
