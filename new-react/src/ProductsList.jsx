@@ -1,17 +1,22 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "./state/productsSlice";
-import Card from "./Card";
+import ProductCard from "./ProductCard";
+import { fetchCart } from "./state/cartSlice";
 
 const ProductsList = () => {
   const dispatch = useDispatch();
   const { products, status, error } = useSelector((state) => state.products);
+  const { items } = useSelector((state) => state.cart);
 
   useEffect(() => {
-    if (status === "idle") {
+    if (items.length == 0) {
+      dispatch(fetchCart());
+    }
+    if (products.length == 0) {
       dispatch(fetchProducts());
     }
-  }, [status, dispatch]);
+  }, [status, items, products, dispatch]);
 
   if (status === "loading") {
     return <div>Loading...</div>;
@@ -24,7 +29,7 @@ const ProductsList = () => {
   return (
     <>
       {products.map((product, index) => (
-        <Card key={index} product={product}></Card>
+        <ProductCard key={index} product={product} items={items}></ProductCard>
       ))}
     </>
   );

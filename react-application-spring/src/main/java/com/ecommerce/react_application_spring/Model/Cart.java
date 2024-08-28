@@ -22,6 +22,16 @@ public class Cart {
     private Products product;
     private int quantity;
 
+    
+    public Cart() {
+    }
+
+    public Cart(Customers customer, Products product, int quantity) {
+        this.customer = customer;
+        this.product = product;
+        this.quantity = quantity;
+    }
+
     public Customers getCustomer() {
         return customer;
     }

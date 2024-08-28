@@ -2,31 +2,61 @@ package com.ecommerce.react_application_spring.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.ecommerce.react_application_spring.Controller.RequestCartItemDTO;
 import com.ecommerce.react_application_spring.Model.Cart;
+import com.ecommerce.react_application_spring.Model.Customers;
+import com.ecommerce.react_application_spring.Model.Products;
 import com.ecommerce.react_application_spring.Repository.CartRepository;
+import com.ecommerce.react_application_spring.Repository.CustomersRepository;
+import com.ecommerce.react_application_spring.Repository.ProductsRepository;
 
+@Transactional
 @Service
 public class CartService {
     @Autowired
     private CartRepository cartRepository;
 
-    public Cart saveCartItem(Cart cart){
-        return cartRepository.save(cart);
+    @Autowired
+    private CustomersRepository customersRepository;
+
+    @Autowired
+    private ProductsRepository productsRepository;
+
+    @Transactional
+    public List<Cart> saveCartItem(RequestCartItemDTO requestCartItemDTO){
+        List<Cart> cartItems = cartRepository.getCartItemsByCustomerId(requestCartItemDTO.getCustomerId());
+        Optional<Cart> cartItemOptional = cartItems.stream().filter(c->c.getProduct().getProductId() == requestCartItemDTO.getProductId()).findFirst();
+        Cart cartItem = null;
+        if(cartItemOptional.isPresent()){
+            cartItem = cartItemOptional.get();
+            cartItem.setQuantity(requestCartItemDTO.getQuantity());
+        } else {
+            Optional<Customers> customer = customersRepository.findById(requestCartItemDTO.getCustomerId());
+            Optional<Products> product = productsRepository.findById(requestCartItemDTO.getProductId());
+            if(product.isPresent() && customer.isPresent()){
+                cartItem = new Cart(customer.get(),product.get(), 1);
+            }
+        }
+        cartRepository.save(cartItem);
+        return cartRepository.getCartItemsByCustomerId(requestCartItemDTO.getCustomerId());
     }
 
-    public List<Cart> getAllCartItems(Long customerId){
+    public List<Cart> getCartItems(Long customerId){
         return cartRepository.getCartItemsByCustomerId(customerId);
-    }
-
-    public Optional<Cart> getOneCartItem(Long id){
-        return cartRepository.findById(id);
     }
 
     public void deleteCart(Long id){
         cartRepository.deleteById(id);
+    }
+
+    public List<Cart> getFullCart() {
+        return cartRepository.findAll();
     }
 }

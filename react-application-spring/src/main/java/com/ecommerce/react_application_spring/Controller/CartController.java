@@ -13,18 +13,19 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
-    @PostMapping("/cart/save")
-    public Cart addCartItem(@RequestBody Cart cart) {
-        return cartService.saveCartItem(cart);
+    @PostMapping("/cart/save") 
+    public List<Cart> addCartItem(@RequestBody RequestCartItemDTO requestCartItemDTO) {
+        return cartService.saveCartItem(requestCartItemDTO);
     }
 
     @GetMapping("/cartItems/{customerId}")
-    public List<Cart> getCarts(@PathVariable Long customerId) {
-        return cartService.getAllCartItems(customerId); 
+    public List<Cart> getCart(@PathVariable Long customerId) {
+        return cartService.getCartItems(customerId); 
     }
-    @GetMapping("/cart/{id}")
-    public Optional<Cart> getCartById(@PathVariable Long id){
-        return  cartService.getOneCartItem(id);
+    
+    @GetMapping("/cart")
+    public List<Cart> getFullCart(){
+        return  cartService.getFullCart();
     }
 }
 

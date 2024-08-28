@@ -20,7 +20,6 @@ public class Customers {
     private String email;
     @Size(min = 8, message = "is required")
     private String newPassword;
-    private String rePassword;
     private String state;
 
     public Customers(String userName, String phoneNo, String email, String newPassword, String state) {
@@ -67,14 +66,6 @@ public class Customers {
         this.email = email;
     }
 
-    public String getRePassword() {
-        return rePassword;
-    }
-
-    public void setRePassword(String rePassword) {
-        this.rePassword = rePassword;
-    }
-
     public String getNewPassword() {
         return newPassword;
     }
@@ -99,7 +90,6 @@ public class Customers {
                 ", phoneNo='" + phoneNo + '\'' +
                 ", email='" + email + '\'' +
                 ", newPassword='" + newPassword + '\'' +
-                ", rePassword='" + rePassword + '\'' +
                 ", state='" + state + '\'' +
                 '}';
     }

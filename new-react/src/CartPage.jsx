@@ -1,11 +1,11 @@
 import AppNavbar from "./AppNavbar";
-import CartCards from "./CartCards";
+import CartList from "./CartList";
 
 function CartPage() {
   return (
     <>
       <AppNavbar></AppNavbar>
-      <CartCards></CartCards>
+      <CartList />
     </>
   );
 }

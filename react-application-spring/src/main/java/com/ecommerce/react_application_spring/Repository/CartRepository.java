@@ -10,7 +10,9 @@ import java.util.List;
 @Repository
 public interface CartRepository extends JpaRepository<Cart,Long>{
 
-
+ 
     @Query("from Cart c where c.customer.id = :id")
     public List<Cart> getCartItemsByCustomerId(@Param("id") Long id);
+
+
 }
