@@ -4,6 +4,13 @@ public class RequestCartItemDTO {
     private Long customerId;
     private Long productId;
     private int quantity;
+    
+    
+    public RequestCartItemDTO(Long customerId, Long productId, int quantity) {
+        this.customerId = customerId;
+        this.productId = productId;
+        this.quantity = quantity;
+    }
     public Long getCustomerId() {
         return customerId;
     }

@@ -17,12 +17,26 @@ export const fetchCart = createAsyncThunk("cart/fetchCart", async () => {
 export const addToCart = createAsyncThunk(
   "cart/addToCart",
   async ({ customerId, productId, quantity }) => {
-    const response = await axios.post("http://localhost:8080/cart/save", {
-      customerId,
-      productId,
-      quantity,
-    });
-    return response.data;
+    try {
+      if (
+        !customerId ||
+        !productId ||
+        !(quantity != null && quantity != undefined)
+      ) {
+        throw new Error("Missing required parameters.");
+      }
+      const response = await axios.post("http://localhost:8080/cart/save", {
+        customerId,
+        productId,
+        quantity,
+      });
+      return response.data;
+    } catch (exception) {
+      console.error(exception.message);
+      return rejectWithValue(
+        exception.response?.data || "Failed to add to cart"
+      );
+    }
   }
 );
 
@@ -55,6 +69,7 @@ const cartSlice = createSlice({
 });
 
 export default cartSlice.reducer;
+
 // export const { addToCart, removeFromCart } = cartSlice.actions;
 
 // addToCart: (state, action) => {

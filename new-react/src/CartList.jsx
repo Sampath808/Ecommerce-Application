@@ -11,7 +11,7 @@ const CartList = () => {
 
   useEffect(() => {
     dispatch(fetchCart());
-  }, [status, dispatch]);
+  }, [dispatch]);
 
   if (status === "loading") {
     return <div>Loading...</div>;

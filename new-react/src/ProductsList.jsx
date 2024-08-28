@@ -10,13 +10,9 @@ const ProductsList = () => {
   const { items } = useSelector((state) => state.cart);
 
   useEffect(() => {
-    if (items.length == 0) {
-      dispatch(fetchCart());
-    }
-    if (products.length == 0) {
-      dispatch(fetchProducts());
-    }
-  }, [status, items, products, dispatch]);
+    dispatch(fetchCart());
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
   if (status === "loading") {
     return <div>Loading...</div>;

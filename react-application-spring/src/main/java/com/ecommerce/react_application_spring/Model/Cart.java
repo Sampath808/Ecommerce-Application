@@ -36,7 +36,7 @@ public class Cart {
         return customer;
     }
 
-    public void setCUstomer(Customers customer) {
+    public void setCustomer(Customers customer) {
         this.customer = customer;
     }
     

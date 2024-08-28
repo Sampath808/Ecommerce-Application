@@ -32,11 +32,17 @@ public class CartService {
     @Transactional
     public List<Cart> saveCartItem(RequestCartItemDTO requestCartItemDTO){
         List<Cart> cartItems = cartRepository.getCartItemsByCustomerId(requestCartItemDTO.getCustomerId());
-        Optional<Cart> cartItemOptional = cartItems.stream().filter(c->c.getProduct().getProductId() == requestCartItemDTO.getProductId()).findFirst();
+        Optional<Cart> cartItemOptional = cartItems.stream().filter(c->c.getProduct().getProductId().equals(requestCartItemDTO.getProductId())).findFirst();
         Cart cartItem = null;
         if(cartItemOptional.isPresent()){
             cartItem = cartItemOptional.get();
-            cartItem.setQuantity(requestCartItemDTO.getQuantity());
+            if(requestCartItemDTO.getQuantity() == 0 ){
+                cartRepository.delete(cartItem);
+                cartItem = null;
+            }
+            else{
+                cartItem.setQuantity(requestCartItemDTO.getQuantity());
+            }
         } else {
             Optional<Customers> customer = customersRepository.findById(requestCartItemDTO.getCustomerId());
             Optional<Products> product = productsRepository.findById(requestCartItemDTO.getProductId());
@@ -44,9 +50,15 @@ public class CartService {
                 cartItem = new Cart(customer.get(),product.get(), 1);
             }
         }
-        cartRepository.save(cartItem);
+        if(cartItem != null){
+            cartRepository.save(cartItem);
+        }
+        else{
+            System.out.println("Can not add item to cart");
+        }
         return cartRepository.getCartItemsByCustomerId(requestCartItemDTO.getCustomerId());
     }
+
 
     public List<Cart> getCartItems(Long customerId){
         return cartRepository.getCartItemsByCustomerId(customerId);
