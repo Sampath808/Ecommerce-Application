@@ -11,11 +11,14 @@ const initialState = {
 
 export const fetchCart = createAsyncThunk("cart/fetchCart", async () => {
   const response = await axios.get("http://localhost:8080/cartItems/1");
-  return response.data;
+  return response.data.map((item) => ({
+    ...item,
+    imgUrl: "http://localhost:8080/images/" + item.product.imgName,
+  }));
 });
 
-export const addToCart = createAsyncThunk(
-  "cart/addToCart",
+export const updateCart = createAsyncThunk(
+  "cart/updateCart",
   async ({ customerId, productId, quantity }) => {
     try {
       if (
@@ -31,35 +34,15 @@ export const addToCart = createAsyncThunk(
         productId,
         quantity,
       });
-      return response.data;
+      return response.data.map((item) => ({
+        ...item,
+        imgUrl: "http://localhost:8080/images/" + item.product.imgName,
+      }));
     } catch (exception) {
       console.error(exception.message);
       return rejectWithValue(
-        exception.response?.data || "Failed to add to cart"
+        exception.response?.data || "Failed to update cart"
       );
-    }
-  }
-);
-
-export const removeCartItem = createAsyncThunk(
-  "cart/removeCartItem",
-  async ({ customerId, productId, quantity }) => {
-    try {
-      if (
-        !customerId ||
-        !productId ||
-        quantity == null ||
-        quantity == undefined
-      ) {
-        throw new Error("Missing required parameters.");
-      }
-      await axios.delete("http://localhost:8080/cartItem/delete", {
-        customerId,
-        productId,
-        quantity,
-      });
-    } catch (exception) {
-      console.error(exception.message);
     }
   }
 );
@@ -77,16 +60,32 @@ const cartSlice = createSlice({
       .addCase(fetchCart.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.items = action.payload;
+        state.totalAmount = state.items.reduce(
+          (sum, item) => sum + item.product.sellingPrice * item.quantity,
+          0
+        );
+        state.totalQuantity = state.items.reduce(
+          (sum, item) => sum + item.quantity,
+          0
+        );
       })
       .addCase(fetchCart.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       })
-      .addCase(addToCart.fulfilled, (state, action) => {
+      .addCase(updateCart.fulfilled, (state, action) => {
         state.status = "added to cart";
         state.items = action.payload;
+        state.totalAmount = state.items.reduce(
+          (sum, item) => sum + item.product.sellingPrice * item.quantity,
+          0
+        );
+        state.totalQuantity = state.items.reduce(
+          (sum, item) => sum + item.quantity,
+          0
+        );
       })
-      .addCase(addToCart.rejected, (state, action) => {
+      .addCase(updateCart.rejected, (state, action) => {
         state.error = action.error.message;
       });
   },

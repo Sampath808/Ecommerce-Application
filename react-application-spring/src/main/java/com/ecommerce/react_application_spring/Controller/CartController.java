@@ -25,16 +25,6 @@ public class CartController {
         return cartService.getCartItems(customerId); 
     }
 
-    @DeleteMapping("/cartItem/delete")
-    public ResponseEntity<Void> deleteCartItem(@RequestBody RequestCartItemDTO requestCartItemDTO) {
-        boolean isDeleted = cartService.deleteCartItem(requestCartItemDTO);
-        
-        if (isDeleted) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT); 
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
     
     @GetMapping("/cart")
     public List<Cart> getFullCart(){

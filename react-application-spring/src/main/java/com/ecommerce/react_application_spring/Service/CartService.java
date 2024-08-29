@@ -64,21 +64,6 @@ public class CartService {
         return cartRepository.getCartItemsByCustomerId(customerId);
     }
 
-    public boolean deleteCartItem(RequestCartItemDTO requestCartItemDTO){
-        List<Cart> cartItems = cartRepository.getCartItemsByCustomerId(requestCartItemDTO.getCustomerId());
-        Optional<Cart> cartItemOptional = cartItems.stream().filter(c->c.getProduct().getProductId().equals(requestCartItemDTO.getProductId())).findFirst();    
-        Cart cartItem = null;
-        if(cartItemOptional.isPresent()){
-            cartItem = cartItemOptional.get();
-            cartRepository.delete(cartItem);
-            return true;
-        }
-        else {
-            System.out.println("Cart item not found for deletion");
-            return false;
-        }
-
-    }
 
     public List<Cart> getFullCart() {
         return cartRepository.findAll();

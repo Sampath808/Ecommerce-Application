@@ -1,16 +1,15 @@
 import React from "react";
-import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
 import "./index.css";
 import { useDispatch } from "react-redux";
-import { addToCart, removeCartItem } from "./state/cartSlice";
+import { updateCart } from "./state/cartSlice";
+import Button from "react-bootstrap/esm/Button";
 
 function CartCard({ item }) {
   const dispatch = useDispatch();
 
   const handleIncrement = () => {
     dispatch(
-      addToCart({
+      updateCart({
         customerId: 1,
         productId: item.product.productId,
         quantity: item.quantity + 1,
@@ -20,7 +19,7 @@ function CartCard({ item }) {
 
   const handleDecrement = () => {
     dispatch(
-      addToCart({
+      updateCart({
         customerId: 1,
         productId: item.product.productId,
         quantity: item.quantity - 1,
@@ -30,31 +29,57 @@ function CartCard({ item }) {
 
   const handleRemove = () => {
     dispatch(
-      removeCartItem({
+      updateCart({
         customerId: 1,
         productId: item.product.productId,
-        quantity: item.quantity,
+        quantity: 0,
       })
     );
   };
 
   return (
-    <Card>
-      <Card.Body>
-        <Card.Title>{item.product.name}</Card.Title>
-        <Card.Text>{item.product.priceTag}</Card.Text>
-        <Button onClick={() => handleIncrement()} variant="primary">
-          +
-        </Button>
-        <p className="box">{item.quantity}</p>
-        <Button onClick={() => handleDecrement()} variant="primary">
-          -
-        </Button>
-        <Button onClick={() => handleRemove()} variant="primary">
-          Remove
-        </Button>
-      </Card.Body>
-    </Card>
+    <>
+      <div className="card-cart card--box-shadow card--light card--violet">
+        <img
+          src={item.imgUrl}
+          alt={item.product.name}
+          className="rounded flex-left"
+          width="150"
+          height="150"
+        ></img>
+
+        <section className="col-5">
+          <p>{item.product.name}</p>
+          <div className="d-flex quantity">
+            <Button
+              className="Button"
+              onClick={() => handleDecrement()}
+              variant="warning"
+            >
+              -
+            </Button>
+            <p>Quantity : {item.quantity}</p>
+            <Button
+              className="Button"
+              onClick={() => handleIncrement()}
+              variant="warning"
+            >
+              +
+            </Button>
+          </div>
+        </section>
+        <section className="col-5">
+          <p>{item.product.priceTag}</p>
+          <Button
+            className="removeButton"
+            onClick={() => handleRemove()}
+            variant="danger"
+          >
+            Remove
+          </Button>
+        </section>
+      </div>
+    </>
   );
 }
 

@@ -1,10 +1,12 @@
 import "./index.css";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { addToCart } from "./state/cartSlice";
+import { updateCart } from "./state/cartSlice";
+import Button from "react-bootstrap/esm/Button";
 
 function ProductCard({ product, items }) {
   const dispatch = useDispatch();
+
   let cartItem = null;
   let quantity = null;
 
@@ -19,12 +21,33 @@ function ProductCard({ product, items }) {
       quantity = 1;
     }
     dispatch(
-      addToCart({ customerId: 1, productId: product.productId, quantity })
+      updateCart({ customerId: 1, productId: product.productId, quantity })
     );
   };
+
+  const handleIncrement = () => {
+    dispatch(
+      updateCart({
+        customerId: 1,
+        productId: product.productId,
+        quantity: cartItem.quantity + 1,
+      })
+    );
+  };
+
+  const handleDecrement = () => {
+    dispatch(
+      updateCart({
+        customerId: 1,
+        productId: product.productId,
+        quantity: cartItem.quantity - 1,
+      })
+    );
+  };
+
   return (
     <>
-      <div className="card">
+      <div className="product-card card card--box-shadow card--light card--violet">
         <img
           src={product.imgUrl}
           alt={product.name}
@@ -43,7 +66,23 @@ function ProductCard({ product, items }) {
             Add to cart
           </button>
         ) : (
-          <p>Quantity : {cartItem.quantity}</p>
+          <div className="d-flex quantity">
+            <Button
+              className="Button"
+              onClick={() => handleDecrement()}
+              variant="warning"
+            >
+              -
+            </Button>
+            <p>Quantity : {cartItem.quantity}</p>
+            <Button
+              className="Button"
+              onClick={() => handleIncrement()}
+              variant="warning"
+            >
+              +
+            </Button>
+          </div>
         )}
       </div>
     </>
