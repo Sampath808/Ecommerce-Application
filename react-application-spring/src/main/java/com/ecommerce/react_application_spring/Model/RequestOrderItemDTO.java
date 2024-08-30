@@ -1,21 +1,20 @@
-package com.ecommerce.react_application_spring.Controller;
+package com.ecommerce.react_application_spring.Model;
 
-public class RequestCartItemDTO {
-    private Long customerId;
+public class RequestOrderItemDTO {
+    private Long orderId;
     private Long productId;
     private int quantity;
     
-    
-    public RequestCartItemDTO(Long customerId, Long productId, int quantity) {
-        this.customerId = customerId;
+    public RequestOrderItemDTO(Long orderId, Long productId, int quantity) {
+        this.orderId = orderId;
         this.productId = productId;
         this.quantity = quantity;
     }
-    public Long getCustomerId() {
-        return customerId;
+    public Long getOrderId() {
+        return orderId;
     }
-    public void setCustomerId(Long customerId) {
-        this.customerId = customerId;
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
     public Long getProductId() {
         return productId;
@@ -30,5 +29,4 @@ public class RequestCartItemDTO {
         this.quantity = quantity;
     }
 
-    
 }

@@ -1,9 +1,30 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import { useNavigate } from "react-router-dom";
+import { placeOrder, fetchOrder } from "./state/orderSlice";
 
 const PricingDetials = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { totalAmount, totalQuantity } = useSelector((state) => state.cart);
+  const { orderId, status, orderItems } = useSelector((state) => state.order);
+
+  const handlePlaceOrder = () => {
+    dispatch(
+      placeOrder({
+        orderStatus: "Order Placed",
+        amount: totalAmount,
+        customerId: 1,
+        paymentType: "COD",
+        paymentReference: "someID",
+      })
+    );
+    dispatch(fetchOrder(orderId));
+    if (status == "success" && orderItems.length > 0) {
+      navigate("/anOrder");
+    }
+  };
   return (
     <Card style={{ width: "22rem" }} className=" price-details sticky-top m-4">
       <Card.Body>
@@ -19,7 +40,9 @@ const PricingDetials = () => {
           <b className="mb-2 text-muted col-4">Rs.{totalAmount}.0</b>
         </div>
         <div className="text-center">
-          <Button variant="success">Place Order</Button>
+          <Button variant="success" onClick={() => handlePlaceOrder()}>
+            Place Order
+          </Button>
         </div>
       </Card.Body>
     </Card>

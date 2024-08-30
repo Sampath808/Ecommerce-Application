@@ -1,8 +1,8 @@
 package com.ecommerce.react_application_spring.Service;
 
 
-import com.ecommerce.react_application_spring.Controller.ProductsDTO;
 import com.ecommerce.react_application_spring.Model.Products;
+import com.ecommerce.react_application_spring.Model.ProductsDTO;
 import com.ecommerce.react_application_spring.Repository.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

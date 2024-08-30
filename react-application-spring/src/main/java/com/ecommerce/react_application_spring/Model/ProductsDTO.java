@@ -1,4 +1,4 @@
-package com.ecommerce.react_application_spring.Controller;
+package com.ecommerce.react_application_spring.Model;
 
 import lombok.Data;
 

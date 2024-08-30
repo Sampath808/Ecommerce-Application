@@ -6,7 +6,7 @@ function Welcome() {
   return (
     <>
       <h1>Click this button!</h1>
-      <Link className="btn btn-outline-danger" to="/addcustomer">
+      <Link className="btn btn-outline-danger" to="/addCustomer">
         Add User
       </Link>
       <Link className="btn btn-outline-danger" to="/home">

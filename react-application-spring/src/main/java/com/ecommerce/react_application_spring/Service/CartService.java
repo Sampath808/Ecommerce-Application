@@ -2,17 +2,14 @@ package com.ecommerce.react_application_spring.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ecommerce.react_application_spring.Controller.RequestCartItemDTO;
 import com.ecommerce.react_application_spring.Model.Cart;
 import com.ecommerce.react_application_spring.Model.Customers;
 import com.ecommerce.react_application_spring.Model.Products;
+import com.ecommerce.react_application_spring.Model.RequestCartItemDTO;
 import com.ecommerce.react_application_spring.Repository.CartRepository;
 import com.ecommerce.react_application_spring.Repository.CustomersRepository;
 import com.ecommerce.react_application_spring.Repository.ProductsRepository;
@@ -63,7 +60,6 @@ public class CartService {
     public List<Cart> getCartItems(Long customerId){
         return cartRepository.getCartItemsByCustomerId(customerId);
     }
-
 
     public List<Cart> getFullCart() {
         return cartRepository.findAll();
