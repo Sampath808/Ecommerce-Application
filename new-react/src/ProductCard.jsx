@@ -47,7 +47,7 @@ function ProductCard({ product, items }) {
 
   return (
     <>
-      <div className="product-card card card--box-shadow card--light card--violet">
+      <div className="product-card  card card--box-shadow card--light card--violet">
         <img
           src={product.imgUrl}
           alt={product.name}
@@ -55,7 +55,7 @@ function ProductCard({ product, items }) {
           width="250"
           height="250"
         ></img>
-        <p>{product.name}</p>
+        <b>{product.name}</b>
         <p>{product.priceTag}</p>
         {cartItem == null || cartItem.quantity == 0 ? (
           <button
@@ -74,7 +74,7 @@ function ProductCard({ product, items }) {
             >
               -
             </Button>
-            <p>Quantity : {cartItem.quantity}</p>
+            <p>{cartItem.quantity}</p>
             <Button
               className="Button"
               onClick={() => handleIncrement()}

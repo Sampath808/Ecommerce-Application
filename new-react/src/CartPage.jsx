@@ -1,4 +1,4 @@
-import AppNavbar from "./AppNavbar";
+import Container from "react-bootstrap/esm/Container";
 import CartList from "./CartList";
 import PricingDetials from "./PricingDetails";
 import "./index.css";
@@ -6,11 +6,13 @@ import "./index.css";
 function CartPage() {
   return (
     <>
-      <AppNavbar></AppNavbar>
-      <section className="parent-cart-container">
-        <CartList className="cart-container" />
-        <PricingDetials />
-      </section>
+      <h2 className="text-center">Your Cart</h2>
+      <Container>
+        <div className="parent-cart-container">
+          <CartList className="cart-container" />
+          <PricingDetials />
+        </div>
+      </Container>
     </>
   );
 }

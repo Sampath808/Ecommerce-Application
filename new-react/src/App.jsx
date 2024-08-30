@@ -5,10 +5,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AddCustomer from "./AddCustomer";
 import Welcome from "./Welcome";
 import CartPage from "./CartPage";
+import AppNavbar from "./AppNavbar";
 
 function App() {
   return (
     <>
+      <AppNavbar />
       <Router>
         <Routes>
           <Route exact path="/" element={<Home />} />

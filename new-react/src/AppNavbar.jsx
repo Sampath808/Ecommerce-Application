@@ -3,16 +3,12 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import "./index.css";
+import NavLink from "react-bootstrap/esm/NavLink";
 
 function AppNavbar() {
   return (
     <>
-      <Navbar
-        expand="lg"
-        className="bg-body-tertiary"
-        bg="dark"
-        data-bs-theme="dark"
-      >
+      <Navbar expand="lg" bg="dark" data-bs-theme="dark">
         <Container>
           <Navbar.Brand href="/">Home</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -20,25 +16,27 @@ function AppNavbar() {
             <Nav className="container-fluid">
               <Nav.Item className="justify-content-center">
                 {" "}
-                <form className="form-inline my-2 my-lg-0 d-flex">
-                  <input
-                    className="form-control mr-sm-2 col-8"
-                    type="search"
-                    placeholder="Search"
-                    aria-label="Search"
-                  />
-                  <button
-                    style={{ color: "#ffc107" }}
-                    className="btn btn-outline-light my-2 my-sm-0 col-3"
-                    type="submit"
-                  >
-                    Search
-                  </button>
+                <form className="row m-2 w-100">
+                  <div className="mr-sm-2 col-8">
+                    <input
+                      className="form-control "
+                      type="search"
+                      placeholder="Search"
+                      aria-label="Search"
+                    />
+                  </div>
+                  <div className="mr-sm-2 col-3">
+                    <button className="btn btn-outline-light " type="submit">
+                      Search
+                    </button>
+                  </div>
                 </form>
+              </Nav.Item>
+              <Nav.Item className="cart-link ">
+                <NavLink href="/cart">Go to cart</NavLink>
               </Nav.Item>
             </Nav>
           </Navbar.Collapse>
-          <Navbar.Brand href="/cart">Go to cart</Navbar.Brand>
         </Container>
       </Navbar>
     </>

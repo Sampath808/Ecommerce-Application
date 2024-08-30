@@ -3,6 +3,7 @@ import "./index.css";
 import { useDispatch } from "react-redux";
 import { updateCart } from "./state/cartSlice";
 import Button from "react-bootstrap/esm/Button";
+import Container from "react-bootstrap/esm/Container";
 
 function CartCard({ item }) {
   const dispatch = useDispatch();
@@ -38,8 +39,8 @@ function CartCard({ item }) {
   };
 
   return (
-    <>
-      <div className="card-cart card--box-shadow card--light card--violet">
+    <Container>
+      <div className="card-cart card--box-shadow card--light">
         <img
           src={item.imgUrl}
           alt={item.product.name}
@@ -48,8 +49,8 @@ function CartCard({ item }) {
           height="150"
         ></img>
 
-        <section className="col-5">
-          <p>{item.product.name}</p>
+        <div>
+          <p className="text-center">{item.product.name}</p>
           <div className="d-flex quantity">
             <Button
               className="Button"
@@ -67,8 +68,8 @@ function CartCard({ item }) {
               +
             </Button>
           </div>
-        </section>
-        <section className="col-5">
+        </div>
+        <div className="text-center">
           <p>{item.product.priceTag}</p>
           <Button
             className="removeButton"
@@ -77,9 +78,9 @@ function CartCard({ item }) {
           >
             Remove
           </Button>
-        </section>
+        </div>
       </div>
-    </>
+    </Container>
   );
 }
 

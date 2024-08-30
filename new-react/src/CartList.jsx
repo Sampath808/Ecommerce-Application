@@ -23,13 +23,12 @@ const CartList = () => {
 
   return (
     <div>
-      <h2>Your Cart</h2>
       {items.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
         <>
           {items.map((item) => (
-            <CartCard key={item.cartId} item={item} />
+            <CartCard className="m-2" key={item.cartId} item={item} />
           ))}
         </>
       )}
