@@ -2,22 +2,11 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
+  order: null,
   orders: [],
-  orderId: 0,
-  orderItems: [],
   status: "idle",
   error: "null",
 };
-
-export const fetchOrder = createAsyncThunk(
-  "order/fetchOrder",
-  async ({ orderId }) => {
-    const response = await axios.get(
-      `http://localhost:8080/orderItems/${orderId}`
-    );
-    return response.data;
-  }
-);
 
 export const placeOrder = createAsyncThunk(
   "order/placeOrder",
@@ -45,7 +34,8 @@ export const placeOrder = createAsyncThunk(
         paymentType,
         paymentReference,
       });
-      return response.data;
+      const data = await response.data;
+      return data;
     } catch (exception) {
       console.error(exception.message);
       return rejectWithValue(
@@ -58,28 +48,24 @@ export const placeOrder = createAsyncThunk(
 const orderSlice = createSlice({
   name: "order",
   initialState,
-  reducers: {},
+  reducers: {
+    resetOrderApiStatus: (state) => {
+      state.status = "idle";
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchOrder.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(fetchOrder.fulfilled, (state, action) => {
-        state.status = "success";
-        state.orderItems = action.payload;
-      })
-      .addCase(fetchOrder.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload;
-      })
       .addCase(placeOrder.fulfilled, (state, action) => {
+        state.order = action.payload;
         state.status = "success";
-        state.orderId = action.payload;
       })
       .addCase(placeOrder.rejected, (state, action) => {
-        state.error = action.error.message;
+        state.status = "failed";
+        state.error = action.payload;
       });
   },
 });
 
-export default orderSlice.reducer;
+const { actions, reducer } = orderSlice;
+export const { resetOrderApiStatus } = actions;
+export default reducer;

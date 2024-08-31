@@ -9,6 +9,6 @@ import com.ecommerce.react_application_spring.Model.OrderItems;
 
 @Repository
 public interface OrderItemsRepository extends JpaRepository<OrderItems,Long>{
-    @Query("from OrderItems o where o.order.id = :id")
-    public List<OrderItems> getOrderItemByOrderId(@Param("id") Long id);
+    // @Query("from OrderItems o where o.order.id = :id")
+    // public List<OrderItems> getOrderItemByOrderId(@Param("id") Long id);
 }

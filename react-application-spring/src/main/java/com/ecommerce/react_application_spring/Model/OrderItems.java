@@ -1,5 +1,7 @@
 package com.ecommerce.react_application_spring.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,8 +14,9 @@ public class OrderItems {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderItemsId;
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "order_id",nullable = false)
     private Orders order;
     @ManyToOne
     @JoinColumn(name = "product_id")
@@ -23,8 +26,7 @@ public class OrderItems {
     public OrderItems() {
     }
     
-    public OrderItems(Orders order, Products product, int quantity) {
-        this.order = order;
+    public OrderItems(Products product, int quantity) {
         this.product = product;
         this.quantity = quantity;
     }
@@ -51,6 +53,11 @@ public class OrderItems {
     }
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderItems [orderItemsId=" + orderItemsId + ", product=" + product + ", quantity=" + quantity + "]";
     }
 
     

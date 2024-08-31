@@ -2,8 +2,6 @@ package com.ecommerce.react_application_spring.Controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.ecommerce.react_application_spring.Model.Cart;
 import com.ecommerce.react_application_spring.Model.RequestCartItemDTO;
