@@ -3,11 +3,9 @@ package com.ecommerce.react_application_spring.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.ecommerce.react_application_spring.Model.Cart;
 import com.ecommerce.react_application_spring.Model.Customers;
 import com.ecommerce.react_application_spring.Model.OrderItems;
@@ -15,7 +13,6 @@ import com.ecommerce.react_application_spring.Model.Orders;
 import com.ecommerce.react_application_spring.Model.RequestOrderDTO;
 import com.ecommerce.react_application_spring.Repository.CartRepository;
 import com.ecommerce.react_application_spring.Repository.CustomersRepository;
-import com.ecommerce.react_application_spring.Repository.OrderItemsRepository;
 import com.ecommerce.react_application_spring.Repository.OrdersRepository;
 
 
@@ -29,9 +26,6 @@ public class OrderService {
     private CustomersRepository customersRepository;
     @Autowired
     private CartRepository cartRepository;
-    @Autowired
-    private OrderItemsRepository orderItemsRepository;
-
 
     public Orders saveOrder(RequestOrderDTO requestOrderDTO){
         Optional<Customers> customer = customersRepository.findById(requestOrderDTO.getCustomerId());
@@ -42,7 +36,7 @@ public class OrderService {
             List<Cart> cartList = cartRepository.getCartItemsByCustomerId(customer.get().getId());
             List<OrderItems> orderItems = cartList.stream().map(cart-> new OrderItems(cart.getProduct(),cart.getQuantity())).collect(Collectors.toList());
             order.setOrderItems(orderItems);
-            order.setStatus("success");
+            order.setStatus("Order Placed");
             order = ordersRepository.save(order);
             cartList.forEach(cart -> cartRepository.delete(cart));
             System.out.println(order.getOrderId());
@@ -53,12 +47,23 @@ public class OrderService {
             return null;
         }
     }
-
-    public Orders getOrderById(Long id){
-        return ordersRepository.getReferenceById(id);
-    }
     
-    public List<OrderItems> getOrderItemByOrderId(Long id){
-        return ordersRepository.getOrderItemByOrderId(id);
+    public List<Orders> getOrdersById(Long id){
+        return ordersRepository.getOrdersByCustomerId(id);
+    }
+
+    public Orders updateStatus(Long id){
+        Optional<Orders> orderOptional = ordersRepository.findById(id);
+        Orders order = null;
+        if(orderOptional.isPresent()){
+            order = orderOptional.get();
+            order.setStatus("Order Cancelled");
+            order = ordersRepository.save(order);
+            return order;
+        }
+        else {
+            System.out.println("Can not update Order status.");
+            return null;
+        }
     }
 }

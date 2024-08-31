@@ -7,6 +7,38 @@ const initialState = {
   status: "idle",
   error: "null",
 };
+export const updateStatus = createAsyncThunk(
+  "order/updateStatus",
+  async ({ orderId }) => {
+    const id = Number(orderId);
+    try {
+      if (!id) {
+        throw new Error("Missing required parameters.");
+      }
+      const response = await axios.post(
+        `http://localhost:8080/order/statusUpdate/${id}`
+      );
+      const data = await response.data;
+      return data;
+    } catch (exception) {
+      console.error(exception.message);
+      return rejectWithValue(
+        exception.response?.data || "Failed to update order status"
+      );
+    }
+  }
+);
+
+export const fetchOrders = createAsyncThunk("order/fetchOrders", async () => {
+  try {
+    const response = await axios.get(`http://localhost:8080/orders/1`);
+    const data = await response.data;
+    return data;
+  } catch (exception) {
+    console.error(exception.message);
+    return rejectWithValue(exception.response?.data || "Failed to get orders");
+  }
+});
 
 export const placeOrder = createAsyncThunk(
   "order/placeOrder",
@@ -62,6 +94,22 @@ const orderSlice = createSlice({
       .addCase(placeOrder.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
+      })
+      .addCase(fetchOrders.fulfilled, (state, action) => {
+        state.orders = action.payload;
+        state.status = "success";
+      })
+      .addCase(fetchOrders.rejected, (state, action) => {
+        state.error = action.payload;
+        state.status = "failed";
+      })
+      .addCase(updateStatus.fulfilled, (state, action) => {
+        state.order = action.payload;
+        state.status = "success";
+      })
+      .addCase(updateStatus.rejected, (state, action) => {
+        state.error = action.payload;
+        state.status = "failed";
       });
   },
 });

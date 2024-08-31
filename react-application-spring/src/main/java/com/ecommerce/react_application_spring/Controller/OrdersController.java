@@ -1,11 +1,8 @@
 package com.ecommerce.react_application_spring.Controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.ecommerce.react_application_spring.Model.OrderItems;
 import com.ecommerce.react_application_spring.Model.Orders;
 import com.ecommerce.react_application_spring.Model.RequestOrderDTO;
 import com.ecommerce.react_application_spring.Service.OrderService;
@@ -28,15 +25,13 @@ public class OrdersController {
     }
 
     @GetMapping("/orders/{id}")
-    public Orders getOrder(@RequestParam Long id) {
-        return orderService.getOrderById(id);
+    public List<Orders> getOrders(@PathVariable Long id) {
+        return orderService.getOrdersById(id);
     }
 
-    @GetMapping("/orderItems/{id}")
-    public List<OrderItems> getOrderItems(@PathVariable Long id) {
-        return orderService.getOrderItemByOrderId(id);
+    @PostMapping("/order/statusUpdate/{id}")
+    public Orders updateOrderStatus(@PathVariable Long id) {
+        return orderService.updateStatus(id);
     }
-    
-    
     
 }

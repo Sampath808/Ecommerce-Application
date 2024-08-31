@@ -6,6 +6,9 @@ import AddCustomer from "./AddCustomer";
 import CartPage from "./CartPage";
 import AppNavbar from "./AppNavbar";
 import SingleOrder from "./SingleOrder";
+import "mdb-react-ui-kit/dist/css/mdb.min.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import OrdersPage from "./OrdersPage";
 
 function App() {
   return (
@@ -15,6 +18,7 @@ function App() {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/orders" element={<OrdersPage />} />
           <Route path="/orderDetail/:id" element={<SingleOrder />} />
           <Route path="/addCustomer" element={<AddCustomer />} />
         </Routes>

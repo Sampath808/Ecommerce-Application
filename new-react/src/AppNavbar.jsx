@@ -9,7 +9,7 @@ function AppNavbar() {
     <>
       <Navbar expand="lg" bg="dark" data-bs-theme="dark">
         <Container>
-          <Navbar.Brand as={NavLink} to="/">
+          <Navbar.Brand as={NavLink} to="/" style={{ color: "white" }}>
             Home
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -34,7 +34,12 @@ function AppNavbar() {
                 </form>
               </Nav.Item>
               <Nav.Item className="cart-link ">
-                <Nav.Link as={NavLink} to="/cart">
+                <Nav.Link as={NavLink} to="/orders" style={{ color: "white" }}>
+                  Orders
+                </Nav.Link>
+              </Nav.Item>
+              <Nav.Item className="cart-link ">
+                <Nav.Link as={NavLink} to="/cart" style={{ color: "white" }}>
                   Go to cart
                 </Nav.Link>
               </Nav.Item>
