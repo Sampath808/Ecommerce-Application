@@ -7,6 +7,25 @@ const initialState = {
   status: "idle",
   error: "null",
 };
+export const getOrder = createAsyncThunk(
+  "order/getOrder",
+  async ({ orderId }) => {
+    try {
+      if (!orderId) {
+        throw new Error("Missing required parameters.");
+      }
+      const response = await axios.get(
+        `http://localhost:8080/order/${orderId}`
+      );
+      const data = await response.data;
+      return data;
+    } catch (exception) {
+      console.error(exception.message);
+      return rejectWithValue(exception.response?.data || "Failed to get order");
+    }
+  }
+);
+
 export const updateStatus = createAsyncThunk(
   "order/updateStatus",
   async ({ orderId }) => {
@@ -15,7 +34,7 @@ export const updateStatus = createAsyncThunk(
       if (!id) {
         throw new Error("Missing required parameters.");
       }
-      const response = await axios.post(
+      const response = await axios.get(
         `http://localhost:8080/order/statusUpdate/${id}`
       );
       const data = await response.data;
@@ -84,6 +103,9 @@ const orderSlice = createSlice({
     resetOrderApiStatus: (state) => {
       state.status = "idle";
     },
+    resetOrder: (state) => {
+      state.order = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -110,10 +132,18 @@ const orderSlice = createSlice({
       .addCase(updateStatus.rejected, (state, action) => {
         state.error = action.payload;
         state.status = "failed";
+      })
+      .addCase(getOrder.fulfilled, (state, action) => {
+        state.order = action.payload;
+        state.status = "success";
+      })
+      .addCase(getOrder.rejected, (state, action) => {
+        state.error = action.payload;
+        state.status = "failed";
       });
   },
 });
 
 const { actions, reducer } = orderSlice;
-export const { resetOrderApiStatus } = actions;
+export const { resetOrderApiStatus, resetOrder } = actions;
 export default reducer;

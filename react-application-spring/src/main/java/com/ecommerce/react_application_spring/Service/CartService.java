@@ -50,9 +50,6 @@ public class CartService {
         if(cartItem != null){
             cartRepository.save(cartItem);
         }
-        else{
-            System.out.println("Can not add item to cart");
-        }
         return cartRepository.getCartItemsByCustomerId(requestCartItemDTO.getCustomerId());
     }
 

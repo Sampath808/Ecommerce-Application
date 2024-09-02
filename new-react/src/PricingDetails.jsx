@@ -11,11 +11,11 @@ const PricingDetials = () => {
   const { totalAmount, totalQuantity } = useSelector((state) => state.cart);
   const { status } = useSelector((state) => state.order);
 
-  useEffect(() => {
-    if (status === "success") {
-      navigate("/orderDetail/0");
-    }
-  }, [status]);
+  // useEffect(() => {
+  //   if (status === "success") {
+  //     navigate("/orderDetail/0");
+  //   }
+  // }, [status]);
   const handlePlaceOrder = () => {
     dispatch(
       placeOrder({
@@ -28,6 +28,7 @@ const PricingDetials = () => {
     );
     if (status === "success") {
       alert("Your order is placed...!");
+      navigate("/orderDetail/0");
     }
   };
 

@@ -26,10 +26,14 @@ public class OrderItems {
     public OrderItems() {
     }
     
-    public OrderItems(Products product, int quantity) {
+  
+    public OrderItems(Orders order, Products product, int quantity) {
+        this.order = order;
         this.product = product;
         this.quantity = quantity;
     }
+
+
     public Long getOrderItemsId() {
         return orderItemsId;
     }
@@ -55,11 +59,16 @@ public class OrderItems {
         this.quantity = quantity;
     }
 
+
     @Override
     public String toString() {
-        return "OrderItems [orderItemsId=" + orderItemsId + ", product=" + product + ", quantity=" + quantity + "]";
+        return "OrderItems [orderItemsId=" + orderItemsId + ", order=" + order + ", product=" + product + ", quantity="
+                + quantity + "]";
     }
 
+   
+
+ 
     
 
 }

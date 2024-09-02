@@ -83,6 +83,13 @@ public class Orders {
         this.paymentReference = paymentReference;
     }
 
+    @Override
+    public String toString() {
+        return "Orders [orderId=" + orderId + ", status=" + status + ", amount=" + amount + ", customer=" + customer
+                + ", paymentType=" + paymentType + ", paymentReference=" + paymentReference + ", orderItems="
+                + orderItems + "]";
+    }
+
 
 
 }

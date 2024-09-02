@@ -26,10 +26,15 @@ public class OrdersController {
 
     @GetMapping("/orders/{id}")
     public List<Orders> getOrders(@PathVariable Long id) {
-        return orderService.getOrdersById(id);
+        return orderService.getOrdersByCustomerId(id);
     }
 
-    @PostMapping("/order/statusUpdate/{id}")
+     @GetMapping("/order/{id}")
+    public Orders getOrdersByOrderID(@PathVariable Long id) {
+        return orderService.getOrdersByOrderId(id);
+    }
+
+    @GetMapping("/order/statusUpdate/{id}")
     public Orders updateOrderStatus(@PathVariable Long id) {
         return orderService.updateStatus(id);
     }

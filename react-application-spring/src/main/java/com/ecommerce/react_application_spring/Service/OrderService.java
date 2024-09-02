@@ -32,23 +32,27 @@ public class OrderService {
         Orders order = null;
         if(customer.isPresent()){
             order = new Orders(requestOrderDTO.getStatus(),requestOrderDTO.getAmount(),customer.get(),requestOrderDTO.getPaymentType(),requestOrderDTO.getPaymentReference()) ;
-            order = ordersRepository.save(order);
+            Orders dbOrder = ordersRepository.save(order);
             List<Cart> cartList = cartRepository.getCartItemsByCustomerId(customer.get().getId());
-            List<OrderItems> orderItems = cartList.stream().map(cart-> new OrderItems(cart.getProduct(),cart.getQuantity())).collect(Collectors.toList());
-            order.setOrderItems(orderItems);
-            order.setStatus("Order Placed");
-            order = ordersRepository.save(order);
+            List<OrderItems> orderItems = cartList.stream().map(cart-> new OrderItems(dbOrder,cart.getProduct(),cart.getQuantity())).collect(Collectors.toList());
+            dbOrder.setOrderItems(orderItems);
+            dbOrder.setStatus("Order Placed");
+            ordersRepository.save(order);
             cartList.forEach(cart -> cartRepository.delete(cart));
-            System.out.println(order.getOrderId());
-            return order;
+            System.out.println(dbOrder.getOrderId());
+            return dbOrder;
         }
         else {
             System.out.println("Can not place Order.");
             return null;
         }
     }
+
+    public Orders getOrdersByOrderId(Long id){
+        return ordersRepository.findById(id).orElse(null);
+    }
     
-    public List<Orders> getOrdersById(Long id){
+    public List<Orders> getOrdersByCustomerId(Long id){
         return ordersRepository.getOrdersByCustomerId(id);
     }
 

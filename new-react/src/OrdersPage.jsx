@@ -1,26 +1,70 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import { fetchOrders } from "./state/orderSlice";
+import { useNavigate } from "react-router-dom";
+import { fetchOrders, getOrder } from "./state/orderSlice";
+import {
+  MDBCard,
+  MDBCardHeader,
+  MDBCardBody,
+  MDBCardTitle,
+  MDBCardText,
+  MDBBtn,
+  MDBCardImage,
+} from "mdb-react-ui-kit";
 
 const OrdersPage = () => {
-  const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { orders } = useSelector((state) => state.order);
   useEffect(() => {
     dispatch(fetchOrders());
   }, [dispatch]);
+  const handleOrder = (orderId) => {
+    navigate(`/orderDetail/${orderId}`);
+  };
+  const currentOrders = JSON.parse(JSON.stringify(orders));
+  currentOrders.forEach((ord) => {
+    ord.imgUrl =
+      "http://localhost:8080/images/" + ord.orderItems[0].product.imgName;
+  });
   return (
-    <ul>
-      {orders.map((ord, index) => (
-        <li>
-          Order Id: {ord.orderId}, Total Amount: {ord.amount}, Status:{" "}
-          {ord.status}
-        </li>
+    <div className="container mt-2">
+      {currentOrders.map((ord, index) => (
+        <MDBCard
+          key={index}
+          onClick={() => handleOrder(ord.orderId)}
+          className="m-2"
+        >
+          <MDBCardBody className="d-flex justify-content-between">
+            <MDBCardImage
+              src={ord.imgUrl}
+              height={150}
+              width={150}
+              fluid
+              alt={ord.orderId}
+            />
+            <MDBCardTitle>
+              {" "}
+              {ord.orderItems.length > 1
+                ? `${ord.orderItems[0].product.name}....`
+                : ord.orderItems[0].product.name}
+            </MDBCardTitle>
+            <MDBCardTitle>Status: {ord.status}</MDBCardTitle>
+          </MDBCardBody>
+        </MDBCard>
       ))}
-    </ul>
+    </div>
   );
 };
 
 export default OrdersPage;
+
+{
+  /* <ul>
+  {orders.map((ord, index) => (
+    <li>
+      Order Id: {ord.orderId}, Total Amount: {ord.amount}, Status: {ord.status}
+    </li>
+  ))}
+</ul>; */
+}
