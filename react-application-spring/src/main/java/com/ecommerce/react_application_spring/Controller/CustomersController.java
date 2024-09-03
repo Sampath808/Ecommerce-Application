@@ -36,7 +36,7 @@ public class CustomersController {
         customerService.deleteCustomerById(id);
     }
 
-    @GetMapping("/validateCustomer")
+    @PostMapping("/validateCustomer")
     public Customers validateCustomer(@RequestBody RequestCustomerDTO requestCustomerDTO) {
         return customerService.validateLogin(requestCustomerDTO);
     }

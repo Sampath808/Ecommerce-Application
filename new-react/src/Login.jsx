@@ -1,31 +1,56 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { registerCustomer } from "./state/customerSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
+import { validateLogin } from "./state/customerSlice";
 import "./index.css";
+import { useForm } from "react-hook-form";
 
 const Login = () => {
+  const { status } = useSelector((state) => state.customer);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const initialFormData = {
-    email: "",
-    password: "",
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  // const initialFormData = {
+  //   email: "",
+  //   password: "",
+  // };
+
+  const FormValidation = {
+    Email: {
+      required: "Email is required",
+      pattern: {
+        value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+        message: "Invalid email address",
+      },
+    },
+    Password: {
+      required: "Password is required",
+    },
   };
 
-  const [loginForm, setLoginForm] = useState(initialFormData);
-  const { email, password } = loginForm;
-  const handleInput = (e) => {
-    setLoginForm({
-      ...loginForm,
-      [e.target.name]: e.target.value,
-    });
+  const formData = {
+    email: watch("email", ""),
+    password: watch("password", ""),
+  };
+  // const [loginForm, setLoginForm] = useState(initialFormData);
+
+  const submitForm = async (e) => {
+    dispatch(validateLogin(formData));
+    if (status === "success") {
+      alert("Login Successfull!");
+      navigate("/");
+    }
   };
 
-  const handleSubmit = async (e) => {};
-
-  const handleCancel = () => {
-    setCustomer(initialFormData);
-  };
+  // const handleCancel = () => {
+  //   setCustomer(initialFormData);
+  // };
 
   return (
     <>
@@ -40,17 +65,18 @@ const Login = () => {
               />
             </div>
             <div className="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-              <form>
+              <form onSubmit={handleSubmit(submitForm)}>
                 {/* <!-- Email input --> */}
                 <div data-mdb-input-init className="form-outline mb-4">
                   <input
+                    {...register("email", FormValidation.Email)}
                     type="email"
-                    value={email}
                     className="form-control form-control-lg border border-1"
                     placeholder="Enter a valid email address"
                     name="email"
-                    onChange={(e) => handleInput(e)}
                   />
+                  {errors.email && <p>{errors.email.message}</p>}
+
                   <label className="form-label" htmlFor="email">
                     Email address
                   </label>
@@ -59,13 +85,14 @@ const Login = () => {
                 {/* <!-- Password input --> */}
                 <div data-mdb-input-init className="form-outline mb-3">
                   <input
+                    {...register("password", FormValidation.Password)}
                     type="password"
-                    value={password}
                     className="form-control form-control-lg border border-1"
                     placeholder="Enter password"
                     name="password"
-                    onChange={(e) => handleInput(e)}
                   />
+                  {errors.password && <p>{errors.password.message}</p>}
+
                   <label className="form-label" htmlFor="password">
                     Password
                   </label>
@@ -100,7 +127,7 @@ const Login = () => {
                   </button>
                   <p className="small fw-bold mt-2 pt-1 mb-0">
                     Don't have an account?{" "}
-                    <a href="#!" className="link-danger">
+                    <a as={NavLink} to="/signup" className="link-danger">
                       Register
                     </a>
                   </p>

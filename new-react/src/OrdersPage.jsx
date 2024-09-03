@@ -58,13 +58,3 @@ const OrdersPage = () => {
 };
 
 export default OrdersPage;
-
-{
-  /* <ul>
-  {orders.map((ord, index) => (
-    <li>
-      Order Id: {ord.orderId}, Total Amount: {ord.amount}, Status: {ord.status}
-    </li>
-  ))}
-</ul>; */
-}

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { registerCustomer } from "./state/customerSlice";
 import { useForm } from "react-hook-form";
 
 function Signup() {
+  const { status } = useSelector((state) => state.customer);
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -35,8 +36,8 @@ function Signup() {
         message: "Name must be at least 3 characters long",
       },
     },
-    PhoneNumer: {
-      required: "Phone number is required",
+    PNumber: {
+      required: "Phone Number is required",
       pattern: {
         value: /^[0-9]{10}$/,
         message: "Phone number must be 10 digits",
@@ -63,23 +64,25 @@ function Signup() {
     State: { required: "State is required" },
   };
 
-  // const { userName, phoneNo, email, newPassword, confirmPassword, state } = customer;
+  const formData = {
+    userName: watch("userName", ""),
+    phoneNo: watch("pNumber", ""),
+    email: watch("email", ""),
+    newPassword: watch("newPassword", ""),
+    state: watch("state", ""),
+  };
 
-  // const handleInput = (e) => {
-  //   setCustomer({
-  //     ...customer,
-  //     [e.target.name]: e.target.value,
-  //   });
+  const submitForm = async () => {
+    dispatch(registerCustomer(formData));
+    if (status === "success") {
+      alert("Successfully registered!");
+      navigate("/");
+    }
+  };
+
+  // const handleCancel = () => {
+  //   setCustomer(initialFormData);
   // };
-
-  const submitForm = async (data) => {
-    dispatch(registerCustomer(data));
-    alert("Successfully registered!");
-  };
-
-  const handleCancel = () => {
-    setCustomer(initialFormData);
-  };
 
   return (
     <div className="container ">
@@ -105,19 +108,19 @@ function Signup() {
 
           <div className="row  justify-content-center m-2">
             <div className="col-2 text-end">
-              <label htmlFor="phoneNumber" className="from-lable">
+              <label htmlFor="pNumber" className="from-lable">
                 Phone Number:{" "}
               </label>
             </div>
             <div className="col-5">
               <input
-                {...register("phoneNumber", FormValidation.PhoneNumer)}
+                {...register("pNumber", FormValidation.PNumber)}
                 type="text"
                 className="form-control"
                 placeholder="Enter your phone no"
-                name="phoneNo"
+                name="pNumber"
               />
-              {errors.phoneNumber && <p>{errors.phoneNumber.message}</p>}
+              {errors.pNumber && <p>{errors.pNumber.message}</p>}
             </div>
           </div>
 
@@ -169,7 +172,7 @@ function Signup() {
                 type="password"
                 className="form-control"
                 placeholder="Enter the password again"
-                name="rePassword"
+                name="confirmPassword"
               />
               {errors.confirmPassword && (
                 <p>{errors.confirmPassword.message}</p>

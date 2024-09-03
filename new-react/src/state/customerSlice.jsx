@@ -7,12 +7,12 @@ const initialState = {
 };
 export const validateLogin = createAsyncThunk(
   "customer/validateLogin",
-  async ({ email, password }) => {
+  async ({ email, password }, { rejectWithValue }) => {
     try {
       if (!email || !password) {
         throw new Error("Missing required parameters.");
       }
-      const response = await axios.get(
+      const response = await axios.post(
         "http://localhost:8080/validateCustomer",
         {
           email,
@@ -62,6 +62,13 @@ const customerSlice = createSlice({
         state.status = "success";
       })
       .addCase(registerCustomer.rejected, (state) => {
+        state.status = "failed";
+      })
+      .addCase(validateLogin.fulfilled, (state, action) => {
+        state.customer = action.payload;
+        state.status = "success";
+      })
+      .addCase(validateLogin.rejected, (state) => {
         state.status = "failed";
       });
   },
