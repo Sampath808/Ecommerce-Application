@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { fetchOrders, getOrder } from "./state/orderSlice";
 import {
   MDBCard,
   MDBCardHeader,
@@ -11,22 +10,29 @@ import {
   MDBBtn,
   MDBCardImage,
 } from "mdb-react-ui-kit";
+import { fetchOrders } from "./state/orderSlice";
 
 const OrdersPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { orders } = useSelector((state) => state.order);
+  const { customer } = useSelector((state) => state.customer);
+
   useEffect(() => {
-    dispatch(fetchOrders());
-  }, [dispatch]);
+    dispatch(fetchOrders(customer.id));
+  }, [dispatch, customer]);
+
   const handleOrder = (orderId) => {
     navigate(`/orderDetail/${orderId}`);
   };
+
   const currentOrders = JSON.parse(JSON.stringify(orders));
+
   currentOrders.forEach((ord) => {
     ord.imgUrl =
       "http://localhost:8080/images/" + ord.orderItems[0].product.imgName;
   });
+
   return (
     <div className="container mt-2">
       {currentOrders.map((ord, index) => (

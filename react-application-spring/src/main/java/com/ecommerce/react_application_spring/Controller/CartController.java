@@ -9,10 +9,12 @@ import com.ecommerce.react_application_spring.Service.CartService;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 public class CartController {
 
     @Autowired
     private CartService cartService; 
+
 
     @PostMapping("/cart/save") 
     public List<Cart> addCartItem(@RequestBody RequestCartItemDTO requestCartItemDTO) {

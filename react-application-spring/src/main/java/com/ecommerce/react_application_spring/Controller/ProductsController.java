@@ -11,7 +11,7 @@ import com.ecommerce.react_application_spring.Model.ProductsDTO;
 
 
 @RestController
-@CrossOrigin("http://localhost:5173")
+@CrossOrigin(origins = "http://localhost:5173")
 public class ProductsController {
     
     @Autowired

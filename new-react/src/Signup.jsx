@@ -26,7 +26,7 @@ function Signup() {
   //   state: "",
   // };
   // const [customer, setCustomer] = useState(initialFormData);
-  const password = watch("newPassword", "");
+  const password = watch("password", "");
 
   const FormValidation = {
     Name: {
@@ -68,7 +68,7 @@ function Signup() {
     userName: watch("userName", ""),
     phoneNo: watch("pNumber", ""),
     email: watch("email", ""),
-    newPassword: watch("newPassword", ""),
+    password: watch("password", ""),
     state: watch("state", ""),
   };
 
@@ -144,19 +144,19 @@ function Signup() {
 
           <div className="row  justify-content-center m-2">
             <div className="col-2 text-end">
-              <label htmlFor="newPassword" className="from-lable">
+              <label htmlFor="password" className="from-lable">
                 New Password:{" "}
               </label>
             </div>
             <div className="col-5">
               <input
-                {...register("newPassword", FormValidation.Password)}
+                {...register("password", FormValidation.Password)}
                 type="password"
                 className="form-control"
                 placeholder="Enter a new password"
-                name="newPassword"
+                name="password"
               />
-              {errors.newPassword && <p>{errors.newPassword.message}</p>}
+              {errors.password && <p>{errors.password.message}</p>}
             </div>
           </div>
 

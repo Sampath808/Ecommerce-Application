@@ -17,6 +17,7 @@ import java.nio.file.Paths;
 
 @RestController
 @RequestMapping("/images")
+@CrossOrigin(origins = "http://localhost:5173")
 public class ImageController {
 
     @Value("${imagesPath}")

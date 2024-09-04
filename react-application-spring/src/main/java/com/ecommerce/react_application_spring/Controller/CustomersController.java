@@ -9,21 +9,36 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 public class CustomersController {
 
     @Autowired
     private CustomerService customerService;
 
-    @PostMapping("/saveCustomer")
-    public Customers createCustomer(@RequestBody Customers newCustomer) {
-        return customerService.saveCustomer(newCustomer);
+    @GetMapping("/customers/me")
+    public ResponseEntity<Customers> authenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        Customers currentCustomer = (Customers) authentication.getPrincipal();
+
+        return ResponseEntity.ok(currentCustomer);
     }
 
     @GetMapping("/customers")
-    public List<Customers> getCustomers() {
-        return customerService.getAllCustomers();
+    public ResponseEntity<List<Customers>> allCustomers(){
+        List <Customers> customers = customerService.getAllCustomers();
+
+        return ResponseEntity.ok(customers);
+    }
+
+    @PostMapping("/saveCustomer")
+    public Customers createCustomer(@RequestBody Customers newCustomer) {
+        return customerService.saveCustomer(newCustomer);
     }
 
     @GetMapping("/customer/{id}")

@@ -18,7 +18,7 @@ public class CustomerService {
         Optional<Customers> customerOptional = customerList.stream().filter(c->c.getEmail().equals(requestCustomerDTO.getEmail())).findFirst();
         if(customerOptional.isPresent()){
             Customers customer = customerOptional.get();
-            if(customer.getNewPassword().equals(requestCustomerDTO.getPassword())){
+            if(customer.getPassword().equals(requestCustomerDTO.getPassword())){
                 return customer;
             }
             else{

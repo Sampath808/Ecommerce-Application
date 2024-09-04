@@ -2,9 +2,25 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import "./index.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { decodeToken } from "./services/JwtDecode";
+import { useEffect } from "react";
+import { setUser } from "./state/customerSlice";
 
 function AppNavbar() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const token = localStorage.getItem("jwtToken");
+
+    if (token) {
+      const userDetails = decodeToken(token);
+      dispatch(setUser(userDetails));
+    } else {
+      navigate("/login");
+    }
+  }, []);
   return (
     <>
       <Navbar expand="lg" bg="dark" data-bs-theme="dark">

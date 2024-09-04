@@ -8,10 +8,11 @@ const CartList = () => {
   const { items, status, error, totalQuantity, totalAmount } = useSelector(
     (state) => state.cart
   );
+  const { customer } = useSelector((state) => state.customer);
 
   useEffect(() => {
-    dispatch(fetchCart());
-  }, [dispatch]);
+    dispatch(fetchCart(customer.id));
+  }, [dispatch, customer]);
 
   if (status === "loading") {
     return <div>Loading...</div>;

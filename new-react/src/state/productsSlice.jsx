@@ -1,20 +1,25 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { apiCall } from "../services/ApiService";
 
 const initialState = {
   products: [],
   status: "idle",
   error: null,
 };
-
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async () => {
-    const response = await axios.get("http://localhost:8080/products");
-    return response.data.map((product) => ({
-      ...product,
-      imgUrl: "http://localhost:8080/images/" + product.imgUrl,
-    }));
+    setAuthHeader();
+    try {
+      const response = await apiCall("GET", "/products");
+      return response.map((product) => ({
+        ...product,
+        imgUrl: "http://localhost:8080/images/" + product.imgUrl,
+      }));
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      throw error;
+    }
   }
 );
 
@@ -24,9 +29,6 @@ const productsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProducts.pending, (state) => {
-        state.status = "loading";
-      })
       .addCase(fetchProducts.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.products = action.payload;

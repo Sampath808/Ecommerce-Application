@@ -1,9 +1,9 @@
 import React from "react";
 import "./index.css";
 import { useDispatch } from "react-redux";
-import { updateCart } from "./state/cartSlice";
 import Button from "react-bootstrap/esm/Button";
 import Container from "react-bootstrap/esm/Container";
+import { updateCart } from "./state/cartSlice";
 
 function CartCard({ item }) {
   const dispatch = useDispatch();

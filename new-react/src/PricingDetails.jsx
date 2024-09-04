@@ -3,7 +3,6 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import { placeOrder } from "./state/orderSlice";
-import { useEffect } from "react";
 
 const PricingDetials = () => {
   const dispatch = useDispatch();
@@ -16,6 +15,7 @@ const PricingDetials = () => {
   //     navigate("/orderDetail/0");
   //   }
   // }, [status]);
+
   const handlePlaceOrder = () => {
     dispatch(
       placeOrder({

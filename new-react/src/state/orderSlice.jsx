@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { apiCall } from "../services/ApiService";
 
 const initialState = {
   order: null,
@@ -7,6 +7,7 @@ const initialState = {
   status: "idle",
   error: "null",
 };
+
 export const getOrder = createAsyncThunk(
   "order/getOrder",
   async ({ orderId }) => {
@@ -14,11 +15,7 @@ export const getOrder = createAsyncThunk(
       if (!orderId) {
         throw new Error("Missing required parameters.");
       }
-      const response = await axios.get(
-        `http://localhost:8080/order/${orderId}`
-      );
-      const data = await response.data;
-      return data;
+      return await apiCall("GET", `/order/${orderId}`, {}, undefined);
     } catch (exception) {
       console.error(exception.message);
       return rejectWithValue(exception.response?.data || "Failed to get order");
@@ -34,11 +31,7 @@ export const updateStatus = createAsyncThunk(
       if (!id) {
         throw new Error("Missing required parameters.");
       }
-      const response = await axios.get(
-        `http://localhost:8080/order/statusUpdate/${id}`
-      );
-      const data = await response.data;
-      return data;
+      return await apiCall("GET", `/order/statusUpdate/${id}`, {}, undefined);
     } catch (exception) {
       console.error(exception.message);
       return rejectWithValue(
@@ -48,11 +41,9 @@ export const updateStatus = createAsyncThunk(
   }
 );
 
-export const fetchOrders = createAsyncThunk("order/fetchOrders", async () => {
+export const fetchOrders = createAsyncThunk("order/fetchOrders", async (id) => {
   try {
-    const response = await axios.get(`http://localhost:8080/orders/1`);
-    const data = await response.data;
-    return data;
+    return await apiCall("GET", `/orders/` + id, {}, undefined);
   } catch (exception) {
     console.error(exception.message);
     return rejectWithValue(exception.response?.data || "Failed to get orders");
@@ -78,15 +69,18 @@ export const placeOrder = createAsyncThunk(
       ) {
         throw new Error("Missing required parameters.");
       }
-      const response = await axios.post("http://localhost:8080/orders/save", {
-        orderStatus,
-        amount,
-        customerId,
-        paymentType,
-        paymentReference,
-      });
-      const data = await response.data;
-      return data;
+      return await apiCall(
+        "POST",
+        "/orders/save",
+        {},
+        {
+          orderStatus,
+          amount,
+          customerId,
+          paymentType,
+          paymentReference,
+        }
+      );
     } catch (exception) {
       console.error(exception.message);
       return rejectWithValue(

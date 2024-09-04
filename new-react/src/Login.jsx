@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { validateLogin } from "./state/customerSlice";
@@ -15,6 +15,15 @@ const Login = () => {
     watch,
     formState: { errors },
   } = useForm();
+
+  useEffect(() => {
+    if (status === "success") {
+      navigate("/");
+    }
+    if (localStorage.getItem("jwtToken")) {
+      navigate("/");
+    }
+  }, [status]);
 
   // const initialFormData = {
   //   email: "",
@@ -42,10 +51,6 @@ const Login = () => {
 
   const submitForm = async (e) => {
     dispatch(validateLogin(formData));
-    if (status === "success") {
-      alert("Login Successfull!");
-      navigate("/");
-    }
   };
 
   // const handleCancel = () => {

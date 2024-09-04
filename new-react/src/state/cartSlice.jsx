@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { apiCall } from "../services/ApiService";
 
 const initialState = {
   items: [],
@@ -9,9 +10,9 @@ const initialState = {
   totalAmount: 0,
 };
 
-export const fetchCart = createAsyncThunk("cart/fetchCart", async () => {
-  const response = await axios.get("http://localhost:8080/cartItems/1");
-  return response.data.map((item) => ({
+export const fetchCart = createAsyncThunk("cart/fetchCart", async (id) => {
+  const response = await apiCall("GET", "/cartItems/" + id);
+  return response.map((item) => ({
     ...item,
     imgUrl: "http://localhost:8080/images/" + item.product.imgName,
   }));
@@ -29,12 +30,17 @@ export const updateCart = createAsyncThunk(
       ) {
         throw new Error("Missing required parameters.");
       }
-      const response = await axios.post("http://localhost:8080/cart/save", {
-        customerId,
-        productId,
-        quantity,
-      });
-      return response.data.map((item) => ({
+      const response = await apiCall(
+        "POST",
+        "/cart/save",
+        {},
+        {
+          customerId,
+          productId,
+          quantity,
+        }
+      );
+      return response.map((item) => ({
         ...item,
         imgUrl: "http://localhost:8080/images/" + item.product.imgName,
       }));
@@ -92,37 +98,3 @@ const cartSlice = createSlice({
 });
 
 export default cartSlice.reducer;
-
-// export const { addToCart, removeFromCart } = cartSlice.actions;
-
-// addToCart: (state, action) => {
-//       const existingItem = state.items.find(
-//         (item) => item.id === action.payload.id
-//       );
-//       if (existingItem) {
-//         existingItem.quantity += 1; //make this increment quantity in cart table
-//       } else {
-//         state.items.push({
-//           ...action.payload,
-//         });
-//       }
-//       state.totalQuantity += 1;
-//       state.totalAmount += action.payload.price;
-//     },
-//     removeFromCart: (state, action) => {
-//       const existingItem = state.items.find(
-//         (item) => item.id === action.payload.id
-//       );
-//       if (existingItem) {
-//         state.totalQuantity -= 1;
-//         state.totalAmount -= existingItem.price;
-//         if (existingItem.quantity === 1) {
-//           state.items = state.items.filter(
-//             (item) => item.id !== action.payload.id
-//           );
-//         } else {
-//           existingItem.quantity -= 1;
-//           existingItem.totalPrice -= existingItem.price;
-//         }
-//       }
-//     },

@@ -1,12 +1,11 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchCart } from "./state/cartSlice";
 import {
-  getOrder,
   resetOrderApiStatus,
-  updateStatus,
   resetOrder,
+  getOrder,
+  updateStatus,
 } from "./state/orderSlice";
 import {
   MDBCard,
@@ -22,6 +21,7 @@ import {
   MDBTypography,
 } from "mdb-react-ui-kit";
 import Button from "react-bootstrap/esm/Button";
+import { fetchCart } from "./state/cartSlice";
 
 const OrderDetails = () => {
   const { id } = useParams();
@@ -41,12 +41,12 @@ const OrderDetails = () => {
         dispatch(resetOrderApiStatus());
       }
     } else if (order?.orderId) {
-      dispatch(fetchCart());
+      dispatch(fetchCart(customer.id));
       dispatch(resetOrderApiStatus());
     } else {
       navigate("/");
     }
-  }, [dispatch, order, id]);
+  }, [dispatch, order, id, customer]);
 
   const handleCancelOrder = () => {
     dispatch(updateStatus({ orderId: order.orderId }));
