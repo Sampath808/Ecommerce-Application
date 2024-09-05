@@ -9,14 +9,14 @@ const PricingDetials = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { totalAmount, totalQuantity } = useSelector((state) => state.cart);
-  const { status } = useSelector((state) => state.order);
+  const orderStatus = useSelector((state) => state.order.placeOrderStatus);
   const { customer } = useSelector((state) => state.customer);
 
   useEffect(() => {
-    if (status === "success") {
+    if (orderStatus === "success") {
       navigate("/orderDetail/0");
     }
-  }, [status]);
+  }, [orderStatus]);
 
   const handlePlaceOrder = async () => {
     await dispatch(

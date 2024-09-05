@@ -5,9 +5,7 @@ import { fetchCart } from "./state/cartSlice";
 
 const CartList = () => {
   const dispatch = useDispatch();
-  const { items, status, error, totalQuantity, totalAmount } = useSelector(
-    (state) => state.cart
-  );
+  const { items, status } = useSelector((state) => state.cart);
   const { customer } = useSelector((state) => state.customer);
 
   useEffect(() => {
@@ -21,7 +19,7 @@ const CartList = () => {
   }
 
   if (status === "failed") {
-    return <div>Error: {error}</div>;
+    return <div>Error loading cart</div>;
   }
 
   return (

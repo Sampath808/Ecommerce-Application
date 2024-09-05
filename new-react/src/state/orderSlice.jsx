@@ -5,6 +5,7 @@ const initialState = {
   order: null,
   orders: [],
   status: "idle",
+  placeOrderStatus: "idle",
   error: "null",
 };
 
@@ -105,7 +106,7 @@ const orderSlice = createSlice({
     builder
       .addCase(placeOrder.fulfilled, (state, action) => {
         state.order = action.payload;
-        state.status = "success";
+        state.placeOrderStatus = "success";
       })
       .addCase(placeOrder.rejected, (state, action) => {
         state.status = "failed";

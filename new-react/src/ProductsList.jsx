@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "./ProductCard";
 import { fetchCart } from "./state/cartSlice";
-import { fetchOrders, resetOrderApiStatus } from "./state/orderSlice";
+import { fetchOrders } from "./state/orderSlice";
 import { fetchProducts } from "./state/productsSlice";
 
 const ProductsList = () => {
@@ -11,7 +11,6 @@ const ProductsList = () => {
   const { items } = useSelector((state) => state.cart);
   const cartStatus = useSelector((state) => state.cart.status);
   const orderStatus = useSelector((state) => state.order.status);
-
   const { customer } = useSelector((state) => state.customer);
 
   useEffect(() => {
@@ -25,7 +24,6 @@ const ProductsList = () => {
         }
         if (orderStatus != "success" && orderStatus != "loaded") {
           await dispatch(fetchOrders(customer.id));
-          resetOrderApiStatus();
         }
       }
     };

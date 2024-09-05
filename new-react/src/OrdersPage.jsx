@@ -10,7 +10,7 @@ import {
   MDBBtn,
   MDBCardImage,
 } from "mdb-react-ui-kit";
-import { fetchOrders } from "./state/orderSlice";
+import { fetchOrders, resetOrder } from "./state/orderSlice";
 
 const OrdersPage = () => {
   const navigate = useNavigate();
@@ -19,7 +19,10 @@ const OrdersPage = () => {
   const { customer } = useSelector((state) => state.customer);
 
   useEffect(() => {
-    dispatch(fetchOrders(customer.id));
+    if (customer) {
+      dispatch(resetOrder());
+      dispatch(fetchOrders(customer.id));
+    }
   }, [dispatch, customer]);
 
   const handleOrder = (orderId) => {

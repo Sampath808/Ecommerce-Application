@@ -31,22 +31,14 @@ const OrderDetails = () => {
   const { customer } = useSelector((state) => state.customer);
 
   useEffect(() => {
-    return () => {
-      dispatch(resetOrder());
-    };
-  }, []);
-
-  useEffect(() => {
-    if (Number(id) != 0 && id != undefined) {
-      if (!order) {
-        dispatch(getOrder({ orderId: Number(id) }));
-        dispatch(resetOrderApiStatus());
+    if (customer) {
+      if (Number(id) != 0 && id != undefined) {
+        if (!order) {
+          dispatch(getOrder({ orderId: Number(id) }));
+        }
+      } else if (order?.orderId) {
+        dispatch(fetchCart(customer.id));
       }
-    } else if (order?.orderId) {
-      dispatch(fetchCart(customer.id));
-      dispatch(resetOrderApiStatus());
-    } else {
-      navigate("/");
     }
   }, [dispatch, order, id, customer]);
 
