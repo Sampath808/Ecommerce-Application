@@ -28,6 +28,8 @@ const OrderDetails = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { order, status, error } = useSelector((state) => state.order);
+  const { customer } = useSelector((state) => state.customer);
+
   useEffect(() => {
     return () => {
       dispatch(resetOrder());

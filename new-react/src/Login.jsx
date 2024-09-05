@@ -20,15 +20,10 @@ const Login = () => {
     if (status === "success") {
       navigate("/");
     }
-    if (localStorage.getItem("jwtToken")) {
-      navigate("/");
-    }
+    // if (localStorage.getItem("jwtToken")) {
+    //   navigate("/");
+    // }
   }, [status]);
-
-  // const initialFormData = {
-  //   email: "",
-  //   password: "",
-  // };
 
   const FormValidation = {
     Email: {
@@ -47,7 +42,6 @@ const Login = () => {
     email: watch("email", ""),
     password: watch("password", ""),
   };
-  // const [loginForm, setLoginForm] = useState(initialFormData);
 
   const submitForm = async (e) => {
     dispatch(validateLogin(formData));

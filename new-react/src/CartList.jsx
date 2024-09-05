@@ -11,7 +11,9 @@ const CartList = () => {
   const { customer } = useSelector((state) => state.customer);
 
   useEffect(() => {
-    dispatch(fetchCart(customer.id));
+    if (customer) {
+      dispatch(fetchCart(customer.id));
+    }
   }, [dispatch, customer]);
 
   if (status === "loading") {

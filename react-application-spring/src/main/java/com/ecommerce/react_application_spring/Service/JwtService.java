@@ -14,6 +14,7 @@ import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Service
 public class JwtService {
@@ -47,7 +48,8 @@ public class JwtService {
     public long getExpirationTime() {
         return jwtExpiration;
     }
-
+    
+    @CrossOrigin(exposedHeaders = "header_token")
     private String buildToken(
             Map<String, Object> extraClaims,
             UserDetails userDetails,

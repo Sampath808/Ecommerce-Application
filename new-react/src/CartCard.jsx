@@ -1,17 +1,18 @@
 import React from "react";
 import "./index.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "react-bootstrap/esm/Button";
 import Container from "react-bootstrap/esm/Container";
 import { updateCart } from "./state/cartSlice";
 
 function CartCard({ item }) {
   const dispatch = useDispatch();
+  const { customer } = useSelector((state) => state.customer);
 
   const handleIncrement = () => {
     dispatch(
       updateCart({
-        customerId: 1,
+        customerId: customer.id,
         productId: item.product.productId,
         quantity: item.quantity + 1,
       })
@@ -21,7 +22,7 @@ function CartCard({ item }) {
   const handleDecrement = () => {
     dispatch(
       updateCart({
-        customerId: 1,
+        customerId: customer.id,
         productId: item.product.productId,
         quantity: item.quantity - 1,
       })
@@ -31,7 +32,7 @@ function CartCard({ item }) {
   const handleRemove = () => {
     dispatch(
       updateCart({
-        customerId: 1,
+        customerId: customer.id,
         productId: item.product.productId,
         quantity: 0,
       })

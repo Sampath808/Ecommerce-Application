@@ -72,14 +72,14 @@ export const placeOrder = createAsyncThunk(
       return await apiCall(
         "POST",
         "/orders/save",
-        {},
         {
           orderStatus,
           amount,
           customerId,
           paymentType,
           paymentReference,
-        }
+        },
+        undefined
       );
     } catch (exception) {
       console.error(exception.message);
@@ -95,7 +95,7 @@ const orderSlice = createSlice({
   initialState,
   reducers: {
     resetOrderApiStatus: (state) => {
-      state.status = "idle";
+      state.status = "loaded";
     },
     resetOrder: (state) => {
       state.order = null;

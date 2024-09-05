@@ -8,7 +8,7 @@ export const apiCall = async (method, url, body, headers) => {
     if (token) {
       bearerToken = `Bearer ${token}`;
     }
-    const response = await axios.request({
+    let payLoad = {
       baseURL: baseURL,
       url: url,
       method: method,
@@ -17,11 +17,14 @@ export const apiCall = async (method, url, body, headers) => {
         "Content-Type": "application/json",
         Authorization: bearerToken,
       },
-      body: body,
-    });
+    };
+    if (body && body != {}) {
+      payLoad["data"] = body;
+    }
+    const response = await axios.request(payLoad);
 
     const responseHeaders = response.headers;
-    token = responseHeaders.getAuthorization("Authorization");
+    token = responseHeaders["x-something"];
     if (token) {
       localStorage.setItem("jwtToken", token.split(" ")[1]);
     }

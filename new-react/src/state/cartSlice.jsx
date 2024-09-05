@@ -33,12 +33,12 @@ export const updateCart = createAsyncThunk(
       const response = await apiCall(
         "POST",
         "/cart/save",
-        {},
         {
           customerId,
           productId,
           quantity,
-        }
+        },
+        undefined
       );
       return response.map((item) => ({
         ...item,
@@ -64,7 +64,7 @@ const cartSlice = createSlice({
         state.status = "loading";
       })
       .addCase(fetchCart.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.status = "success";
         state.items = action.payload;
         state.totalAmount = state.items.reduce(
           (sum, item) => sum + item.product.sellingPrice * item.quantity,

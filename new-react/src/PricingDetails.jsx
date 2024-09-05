@@ -3,33 +3,31 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import { placeOrder } from "./state/orderSlice";
+import { useEffect } from "react";
 
 const PricingDetials = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { totalAmount, totalQuantity } = useSelector((state) => state.cart);
   const { status } = useSelector((state) => state.order);
+  const { customer } = useSelector((state) => state.customer);
 
-  // useEffect(() => {
-  //   if (status === "success") {
-  //     navigate("/orderDetail/0");
-  //   }
-  // }, [status]);
+  useEffect(() => {
+    if (status === "success") {
+      navigate("/orderDetail/0");
+    }
+  }, [status]);
 
-  const handlePlaceOrder = () => {
-    dispatch(
+  const handlePlaceOrder = async () => {
+    await dispatch(
       placeOrder({
         orderStatus: "OrderPlaced",
         amount: totalAmount,
-        customerId: 1,
+        customerId: customer.id,
         paymentType: "COD",
         paymentReference: "someID",
       })
     );
-    if (status === "success") {
-      alert("Your order is placed...!");
-      navigate("/orderDetail/0");
-    }
   };
 
   return (

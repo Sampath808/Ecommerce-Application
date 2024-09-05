@@ -9,9 +9,8 @@ const initialState = {
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async () => {
-    setAuthHeader();
     try {
-      const response = await apiCall("GET", "/products");
+      const response = await apiCall("GET", "/products", {}, undefined);
       return response.map((product) => ({
         ...product,
         imgUrl: "http://localhost:8080/images/" + product.imgUrl,
@@ -30,7 +29,7 @@ const productsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchProducts.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.status = "success";
         state.products = action.payload;
       })
       .addCase(fetchProducts.rejected, (state, action) => {
