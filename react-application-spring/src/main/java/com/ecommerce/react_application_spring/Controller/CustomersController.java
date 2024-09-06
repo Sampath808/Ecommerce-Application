@@ -2,9 +2,11 @@ package com.ecommerce.react_application_spring.Controller;
 
 
 import com.ecommerce.react_application_spring.Model.Customers;
+import com.ecommerce.react_application_spring.Model.Orders;
 import com.ecommerce.react_application_spring.Model.RequestCustomerDTO;
 import com.ecommerce.react_application_spring.Service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.web.exchanges.HttpExchange.Principal;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
@@ -34,6 +36,18 @@ public class CustomersController {
         List <Customers> customers = customerService.getAllCustomers();
 
         return ResponseEntity.ok(customers);
+    }
+
+    @GetMapping("/customer/userNameUpdate")
+    public Customers updateUserName(@RequestParam String newName, Principal principal) {
+        String oldName = principal.getName();
+        return customerService.updateUserName(newName,oldName);
+    }
+
+    @GetMapping("/customer/phoneNoUpdate")
+    public Customers updatePhoneNumber(@RequestParam String newNumber, Principal principal) {
+        String userName = principal.getName();
+        return customerService.updatePhoneNo(newNumber,userName);
     }
 
     @PostMapping("/saveCustomer")

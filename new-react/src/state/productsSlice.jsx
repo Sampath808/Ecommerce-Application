@@ -15,9 +15,12 @@ export const fetchProducts = createAsyncThunk(
         ...product,
         imgUrl: "http://localhost:8080/images/" + product.imgUrl,
       }));
-    } catch (error) {
-      console.error("Error fetching products:", error);
-      throw error;
+    } catch (exception) {
+      console.error(exception.message);
+      return rejectWithValue({
+        message: exception.response?.data || "Failed to fetch products",
+        status: exception.response?.status,
+      });
     }
   }
 );

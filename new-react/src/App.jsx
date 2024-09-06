@@ -16,6 +16,7 @@ import Signup from "./Signup";
 import Login from "./Login";
 import OrderDetails from "./OrderDetails";
 import LayoutWithNavbar from "./LayOutWithNavbar";
+import ProfilePage from "./ProfilePage";
 
 function AppWrapper() {
   const location = useLocation();
@@ -28,6 +29,7 @@ function AppWrapper() {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/orders" element={<OrdersPage />} />
         <Route path="/orderDetail/:id" element={<OrderDetails />} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Route>
 
       {/* Routes without Navbar */}

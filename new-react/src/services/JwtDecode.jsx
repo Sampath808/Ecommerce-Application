@@ -6,6 +6,7 @@ export const decodeToken = (token) => {
     return decodedToken;
   } catch (error) {
     console.error("Invalid token", error);
+    localStorage.removeItem("jwtToken");
     return null;
   }
 };

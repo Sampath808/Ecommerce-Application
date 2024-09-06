@@ -24,13 +24,16 @@ export const apiCall = async (method, url, body, headers) => {
     const response = await axios.request(payLoad);
 
     const responseHeaders = response.headers;
-    token = responseHeaders["x-something"];
+    token = responseHeaders["x-token"];
     if (token) {
       localStorage.setItem("jwtToken", token.split(" ")[1]);
     }
     return response.data;
   } catch (error) {
     console.error("Error in apiCall:", error);
+    console.error("Unauthorized user exception, Logging off...");
+    localStorage.removeItem("jwtToken");
+    navigate("/login");
     throw error;
   }
 };

@@ -6,7 +6,7 @@ const initialState = {
   orders: [],
   status: "idle",
   placeOrderStatus: "idle",
-  error: "null",
+  error: null,
 };
 
 export const getOrder = createAsyncThunk(
@@ -19,7 +19,10 @@ export const getOrder = createAsyncThunk(
       return await apiCall("GET", `/order/${orderId}`, {}, undefined);
     } catch (exception) {
       console.error(exception.message);
-      return rejectWithValue(exception.response?.data || "Failed to get order");
+      return rejectWithValue({
+        message: exception.response?.data || "Failed to get order",
+        status: exception.response?.status,
+      });
     }
   }
 );
@@ -35,9 +38,10 @@ export const updateStatus = createAsyncThunk(
       return await apiCall("GET", `/order/statusUpdate/${id}`, {}, undefined);
     } catch (exception) {
       console.error(exception.message);
-      return rejectWithValue(
-        exception.response?.data || "Failed to update order status"
-      );
+      return rejectWithValue({
+        message: exception.response?.data || "Failed to update status",
+        status: exception.response?.status,
+      });
     }
   }
 );
@@ -47,7 +51,10 @@ export const fetchOrders = createAsyncThunk("order/fetchOrders", async (id) => {
     return await apiCall("GET", `/orders/` + id, {}, undefined);
   } catch (exception) {
     console.error(exception.message);
-    return rejectWithValue(exception.response?.data || "Failed to get orders");
+    return rejectWithValue({
+      message: exception.response?.data || "Failed to get orders",
+      status: exception.response?.status,
+    });
   }
 });
 
@@ -84,9 +91,10 @@ export const placeOrder = createAsyncThunk(
       );
     } catch (exception) {
       console.error(exception.message);
-      return rejectWithValue(
-        exception.response?.data || "Failed to update orders"
-      );
+      return rejectWithValue({
+        message: exception.response?.data || "Failed to place order",
+        status: exception.response?.status,
+      });
     }
   }
 );

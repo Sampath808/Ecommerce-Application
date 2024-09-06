@@ -7,4 +7,8 @@ import com.ecommerce.react_application_spring.Model.Customers;
 @Repository
 public interface CustomersRepository extends JpaRepository<Customers,Long> {
     Optional<Customers> findByEmail(String email);
+    Optional<Customers> findByUserName(String userName);
+    Optional<Customers> findByPhoneNo(String phoneNo);
+
+
 }

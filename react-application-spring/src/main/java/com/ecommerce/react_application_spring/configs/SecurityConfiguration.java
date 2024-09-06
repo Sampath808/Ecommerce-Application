@@ -58,7 +58,7 @@ public class SecurityConfiguration {
         configuration.setAllowedOrigins(List.of("http://localhost:5173"));
         configuration.setAllowedMethods(List.of("GET","POST","OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
-        configuration.addExposedHeader("x-something");
+        configuration.addExposedHeader("x-token");
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 

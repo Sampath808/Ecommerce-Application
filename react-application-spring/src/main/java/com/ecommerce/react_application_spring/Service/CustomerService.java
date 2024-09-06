@@ -4,6 +4,7 @@ import com.ecommerce.react_application_spring.Model.Customers;
 import com.ecommerce.react_application_spring.Model.RequestCustomerDTO;
 import com.ecommerce.react_application_spring.Repository.CustomersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +31,21 @@ public class CustomerService {
         }
 
     }
+    public Customers updateUserName (String newName, String oldName){
+        Customers customer = customersRepository.findByUserName(oldName)
+            .orElseThrow(() -> new UsernameNotFoundException("Customer not found"));
+        
+        customer.setUserName(newName);
+        return customersRepository.save(customer);
+    }
+
+    public Customers updatePhoneNo (String newNumber, String userName){
+        Customers customer = customersRepository.findByUserName(userName)
+            .orElseThrow(() -> new UsernameNotFoundException("Customer not found"));
+        
+        customer.setPhoneNo(newNumber);
+        return customersRepository.save(customer);
+    }   
 
     public List<Customers> getAllCustomers(){
         return customersRepository.findAll();

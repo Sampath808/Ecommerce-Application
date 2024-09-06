@@ -11,11 +11,19 @@ const initialState = {
 };
 
 export const fetchCart = createAsyncThunk("cart/fetchCart", async (id) => {
-  const response = await apiCall("GET", "/cartItems/" + id);
-  return response.map((item) => ({
-    ...item,
-    imgUrl: "http://localhost:8080/images/" + item.product.imgName,
-  }));
+  try {
+    const response = await apiCall("GET", "/cartItems/" + id);
+    return response.map((item) => ({
+      ...item,
+      imgUrl: "http://localhost:8080/images/" + item.product.imgName,
+    }));
+  } catch (exception) {
+    console.error(exception.message);
+    return rejectWithValue({
+      message: exception.response?.data || "Failed to fetch cart",
+      status: exception.response?.status,
+    });
+  }
 });
 
 export const updateCart = createAsyncThunk(
@@ -46,9 +54,10 @@ export const updateCart = createAsyncThunk(
       }));
     } catch (exception) {
       console.error(exception.message);
-      return rejectWithValue(
-        exception.response?.data || "Failed to update cart"
-      );
+      return rejectWithValue({
+        message: exception.response?.data || "Failed to update cart",
+        status: exception.response?.status,
+      });
     }
   }
 );

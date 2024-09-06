@@ -3,7 +3,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import "./index.css";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { decodeToken } from "./services/JwtDecode";
 import { useEffect } from "react";
 import { setUser } from "./state/customerSlice";
@@ -11,12 +11,34 @@ import { setUser } from "./state/customerSlice";
 function AppNavbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const cartError = useSelector((state) => state.cart.error);
+  const orderError = useSelector((state) => state.order.error);
+  const customerError = useSelector((state) => state.customer.error);
+  const productError = useSelector((state) => state.products.error);
+
+  useEffect(() => {
+    if (
+      cartError?.status == 403 ||
+      orderError?.status == 403 ||
+      customerError?.status == 403 ||
+      productError?.status == 403
+    ) {
+      console.error("Unauthorized user exception, Logging off...");
+      localStorage.removeItem("jwtToken");
+      navigate("/login");
+    }
+  }, [cartError]);
+
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");
 
     if (token) {
       const userDetails = decodeToken(token);
-      dispatch(setUser(userDetails));
+      if (userDetails) {
+        dispatch(setUser(userDetails));
+      } else {
+        navigate("/login");
+      }
     } else {
       navigate("/login");
     }

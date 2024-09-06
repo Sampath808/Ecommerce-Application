@@ -72,7 +72,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authToken);
 
                     String newJwt = jwtService.generateToken(claims, userDetails);
-                    response.setHeader("x-something", "Bearer " + newJwt);
+                    response.setHeader("x-token", "Bearer " + newJwt);
                 }
             }
 

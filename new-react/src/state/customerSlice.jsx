@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { decodeToken } from "../services/JwtDecode";
-import { useEffect } from "react";
+import { apiCall } from "../services/ApiService";
 
 const initialState = {
   customer: null,
   status: "idle",
+  error: null,
 };
 
 function storeToken(token) {
@@ -26,7 +26,11 @@ export const validateLogin = createAsyncThunk(
       const token = response.data.token;
       storeToken(token);
     } catch (exception) {
-      console.error("Error during login: ", exception.message);
+      console.error(exception.message);
+      return rejectWithValue({
+        message: exception.response?.data || "Failed to login",
+        status: exception.response?.status,
+      });
     }
   }
 );
@@ -49,7 +53,60 @@ export const registerCustomer = createAsyncThunk(
       return data;
     } catch (exception) {
       console.error(exception.message);
-      return rejectWithValue(exception.response?.data || "Failed to register");
+      return rejectWithValue({
+        message: exception.response?.data || "Failed to register",
+        status: exception.response?.status,
+      });
+    }
+  }
+);
+
+export const updateUserName = createAsyncThunk(
+  "customer/updateCustomer",
+  async ({ newName }) => {
+    try {
+      if (!newName) {
+        throw new Error("Missing required parameters.");
+      }
+      return await apiCall(
+        "GET",
+        "/customer/userNameUpdate",
+        {
+          newName,
+        },
+        undefined
+      );
+    } catch (exception) {
+      console.error(exception.message);
+      return rejectWithValue({
+        message: exception.response?.data || "Failed to update username",
+        status: exception.response?.status,
+      });
+    }
+  }
+);
+
+export const updatePhoneNo = createAsyncThunk(
+  "customer/updatePhoneNo",
+  async ({ newNumber }) => {
+    try {
+      if (!newNumber) {
+        throw new Error("Missing required parameters.");
+      }
+      return await apiCall(
+        "GET",
+        "/customer/phoneNoUpdate",
+        {
+          newNumber,
+        },
+        undefined
+      );
+    } catch (exception) {
+      console.error(exception.message);
+      return rejectWithValue({
+        message: exception.response?.data || "Failed to update phone number",
+        status: exception.response?.status,
+      });
     }
   }
 );
@@ -71,13 +128,23 @@ const customerSlice = createSlice({
         state.customer = action.payload;
         state.status = "success";
       })
-      .addCase(registerCustomer.rejected, (state) => {
+      .addCase(registerCustomer.rejected, (state, action) => {
+        state.error = action.payload;
         state.status = "failed";
       })
-      .addCase(validateLogin.fulfilled, (state, action) => {
+      .addCase(validateLogin.fulfilled, (state) => {
         state.status = "success";
       })
       .addCase(validateLogin.rejected, (state) => {
+        state.error = action.payload;
+        state.status = "failed";
+      })
+      .addCase(updateUserName.fulfilled, (state, action) => {
+        state.customer = action.payload;
+        state.status = "success";
+      })
+      .addCase(updateUserName.rejected, (state, action) => {
+        state.error = action.payload;
         state.status = "failed";
       });
   },
