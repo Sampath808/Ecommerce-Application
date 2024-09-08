@@ -8,7 +8,7 @@ const initialState = {
 };
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
-  async () => {
+  async (_, { rejectWithValue }) => {
     try {
       const response = await apiCall("GET", "/products", {}, undefined);
       return response.map((product) => ({

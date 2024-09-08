@@ -31,9 +31,6 @@ export const apiCall = async (method, url, body, headers) => {
     return response.data;
   } catch (error) {
     console.error("Error in apiCall:", error);
-    console.error("Unauthorized user exception, Logging off...");
-    localStorage.removeItem("jwtToken");
-    navigate("/login");
     throw error;
   }
 };

@@ -27,7 +27,7 @@ function AppNavbar() {
       localStorage.removeItem("jwtToken");
       navigate("/login");
     }
-  }, [cartError]);
+  }, [cartError, orderError, customerError, productError]);
 
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");

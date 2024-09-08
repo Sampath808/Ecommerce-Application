@@ -20,9 +20,9 @@ const Login = () => {
     if (status === "success") {
       navigate("/");
     }
-    // if (localStorage.getItem("jwtToken")) {
-    //   navigate("/");
-    // }
+    if (localStorage.getItem("jwtToken")) {
+      navigate("/");
+    }
   }, [status]);
 
   const FormValidation = {

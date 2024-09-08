@@ -14,7 +14,7 @@ function storeToken(token) {
 
 export const validateLogin = createAsyncThunk(
   "customer/validateLogin",
-  async ({ email, password }) => {
+  async ({ email, password }, { rejectWithValue }) => {
     try {
       if (!email || !password) {
         throw new Error("Missing required parameters.");
@@ -37,7 +37,10 @@ export const validateLogin = createAsyncThunk(
 
 export const registerCustomer = createAsyncThunk(
   "customer/registerCustomer",
-  async ({ userName, phoneNo, email, password, state }) => {
+  async (
+    { userName, phoneNo, email, password, state },
+    { rejectWithValue }
+  ) => {
     try {
       if (!userName || !phoneNo || !email || !password || !state) {
         throw new Error("Missing required parameters.");
@@ -63,7 +66,7 @@ export const registerCustomer = createAsyncThunk(
 
 export const updateUserName = createAsyncThunk(
   "customer/updateCustomer",
-  async ({ newName }) => {
+  async ({ newName }, { rejectWithValue }) => {
     try {
       if (!newName) {
         throw new Error("Missing required parameters.");
@@ -88,7 +91,7 @@ export const updateUserName = createAsyncThunk(
 
 export const updatePhoneNo = createAsyncThunk(
   "customer/updatePhoneNo",
-  async ({ newNumber }) => {
+  async ({ newNumber }, { rejectWithValue }) => {
     try {
       if (!newNumber) {
         throw new Error("Missing required parameters.");

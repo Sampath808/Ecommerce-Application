@@ -11,7 +11,7 @@ const initialState = {
 
 export const getOrder = createAsyncThunk(
   "order/getOrder",
-  async ({ orderId }) => {
+  async ({ orderId }, { rejectWithValue }) => {
     try {
       if (!orderId) {
         throw new Error("Missing required parameters.");
@@ -29,7 +29,7 @@ export const getOrder = createAsyncThunk(
 
 export const updateStatus = createAsyncThunk(
   "order/updateStatus",
-  async ({ orderId }) => {
+  async ({ orderId }, { rejectWithValue }) => {
     const id = Number(orderId);
     try {
       if (!id) {
@@ -46,27 +46,27 @@ export const updateStatus = createAsyncThunk(
   }
 );
 
-export const fetchOrders = createAsyncThunk("order/fetchOrders", async (id) => {
-  try {
-    return await apiCall("GET", `/orders/` + id, {}, undefined);
-  } catch (exception) {
-    console.error(exception.message);
-    return rejectWithValue({
-      message: exception.response?.data || "Failed to get orders",
-      status: exception.response?.status,
-    });
+export const fetchOrders = createAsyncThunk(
+  "order/fetchOrders",
+  async (id, { rejectWithValue }) => {
+    try {
+      return await apiCall("GET", `/orders/` + id, {}, undefined);
+    } catch (exception) {
+      console.error(exception.message);
+      return rejectWithValue({
+        message: exception.response?.data || "Failed to get orders",
+        status: exception.response?.status,
+      });
+    }
   }
-});
+);
 
 export const placeOrder = createAsyncThunk(
   "order/placeOrder",
-  async ({
-    orderStatus,
-    amount,
-    customerId,
-    paymentType,
-    paymentReference,
-  }) => {
+  async (
+    { orderStatus, amount, customerId, paymentType, paymentReference },
+    { rejectWithValue }
+  ) => {
     try {
       if (
         !customerId ||

@@ -10,25 +10,28 @@ const initialState = {
   totalAmount: 0,
 };
 
-export const fetchCart = createAsyncThunk("cart/fetchCart", async (id) => {
-  try {
-    const response = await apiCall("GET", "/cartItems/" + id);
-    return response.map((item) => ({
-      ...item,
-      imgUrl: "http://localhost:8080/images/" + item.product.imgName,
-    }));
-  } catch (exception) {
-    console.error(exception.message);
-    return rejectWithValue({
-      message: exception.response?.data || "Failed to fetch cart",
-      status: exception.response?.status,
-    });
+export const fetchCart = createAsyncThunk(
+  "cart/fetchCart",
+  async (id, { rejectWithValue }) => {
+    try {
+      const response = await apiCall("GET", "/cartItems/" + id);
+      return response.map((item) => ({
+        ...item,
+        imgUrl: "http://localhost:8080/images/" + item.product.imgName,
+      }));
+    } catch (exception) {
+      console.error(exception.message);
+      return rejectWithValue({
+        message: exception.response?.data || "Failed to fetch cart",
+        status: exception.response?.status,
+      });
+    }
   }
-});
+);
 
 export const updateCart = createAsyncThunk(
   "cart/updateCart",
-  async ({ customerId, productId, quantity }) => {
+  async ({ customerId, productId, quantity }, { rejectWithValue }) => {
     try {
       if (
         !customerId ||
