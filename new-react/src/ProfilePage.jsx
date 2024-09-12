@@ -7,25 +7,6 @@ const ProfilePage = () => {
   const { customer } = useSelector((state) => state.customer);
   const dispatch = useDispatch();
 
-  let userNameEditDisplay = false;
-  let phoneNoEditDisplay = false;
-
-  const handleUserNameEdit = () => {
-    userNameEditDisplay = true;
-  };
-
-  const handleUserNameCancel = () => {
-    userNameEditDisplay = false;
-  };
-
-  const handlePhoneNoEdit = () => {
-    phoneNoEditDisplay = true;
-  };
-
-  const handlePhoneNoCancel = () => {
-    phoneNoEditDisplay = false;
-  };
-
   const {
     register,
     handleSubmit,
@@ -62,93 +43,51 @@ const ProfilePage = () => {
 
   return (
     <div className="container">
+      <div className="form-outline" data-mdb-input-init>
+        <p>Your email: </p>
+
+        <input
+          className="form-control"
+          name="email"
+          type="text"
+          value={customer.name}
+          readOnly
+        />
+      </div>
+
       <div>
         <p>Personal Information</p>
-        {userNameEditDisplay ? (
-          <a onClick={handleUserNameCancel()}>Cancel</a>
-        ) : (
-          <a onClick={handleUserNameEdit()}>Edit</a>
-        )}
-      </div>
-      {userNameEditDisplay ? (
-        <from onSubmit={handleSubmit(submitUserName)}>
-          <div>
+        <form onSubmit={handleSubmit(submitUserName)}>
+          <div className="form-outline" data-mdb-input-init>
             <input
               {...register("userName", FormValidation.Name)}
               type="text"
-              name="userName"
-              className="form-control form-control-lg"
-              placeholder="Enter your name"
+              name="userName "
+              className="form-control form-control-lg border border-1"
+              value={customer.name}
             />
             {errors.userName && <p>{errors.userName.message}</p>}
+            <input type="submit"></input>
           </div>
-        </from>
-      ) : (
-        <div class="form-outline" data-mdb-input-init>
-          <input
-            class="form-control"
-            id="formControlReadonly"
-            name="userName"
-            type="text"
-            value={customer.userName}
-            readonly
-          />
-          <label class="form-label" for="userName">
-            Readonly
-          </label>
-        </div>
-      )}
-
-      <div class="form-outline" data-mdb-input-init>
-        <input
-          class="form-control"
-          id="formControlReadonly"
-          name="email"
-          type="text"
-          value={customer.email}
-          readonly
-        />
-        <label class="form-label" for="formControlReadonly">
-          Readonly
-        </label>
+        </form>
       </div>
 
       <div>
         <p>Phone Number</p>
-        {phoneNoEditDisplay ? (
-          <a onClick={handlePhoneNoCancel()}>Cancel</a>
-        ) : (
-          <a onClick={handlePhoneNoEdit()}>Edit</a>
-        )}
       </div>
-      {phoneNoEditDisplay ? (
-        <from onSubmit={handleSubmit(submitPhoneNo)}>
-          <div>
-            <input
-              {...register("phoneNo", FormValidation.PhoneNo)}
-              type="text"
-              name="phoneNo"
-              className="form-control form-control-lg"
-              placeholder="Enter your phone number"
-            />
-            {errors.phoneNo && <p>{errors.phoneNo.message}</p>}
-          </div>
-        </from>
-      ) : (
-        <div class="form-outline" data-mdb-input-init>
+      <form onSubmit={handleSubmit(submitPhoneNo)}>
+        <div className="form-outline" data-mdb-input-init>
           <input
-            class="form-control"
-            id="formControlReadonly"
-            name="phoneNo"
+            {...register("phoneNo", FormValidation.PhoneNo)}
             type="text"
+            name="phoneNo"
+            className="form-control form-control-lg border border-1"
             value={customer.phoneNo}
-            readonly
           />
-          <label class="form-label" for="phoneNo">
-            Readonly
-          </label>
+          {errors.phoneNo && <p>{errors.phoneNo.message}</p>}
+          <input type="submit"></input>
         </div>
-      )}
+      </form>
     </div>
   );
 };
