@@ -32,15 +32,15 @@ public class CustomerService {
 
     }
     public Customers updateUserName (String newName, String oldName){
-        Customers customer = customersRepository.findByUserName(oldName)
+        Customers customer = customersRepository.findByFullName(oldName)
             .orElseThrow(() -> new UsernameNotFoundException("Customer not found"));
         
-        customer.setUserName(newName);
+        customer.setFullName(newName);
         return customersRepository.save(customer);
     }
 
-    public Customers updatePhoneNo (String newNumber, String userName){
-        Customers customer = customersRepository.findByUserName(userName)
+    public Customers updatePhoneNo (String newNumber, String fullName){
+        Customers customer = customersRepository.findByFullName(fullName)
             .orElseThrow(() -> new UsernameNotFoundException("Customer not found"));
         
         customer.setPhoneNo(newNumber);

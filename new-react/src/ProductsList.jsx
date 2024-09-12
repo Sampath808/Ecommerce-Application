@@ -35,14 +35,19 @@ const ProductsList = () => {
   }
 
   if (status === "failed") {
-    return <div>Error: {error}</div>;
+    return <div>Error: {error?.message}</div>;
   }
 
   return (
     <>
-      {products.map((product, index) => (
-        <ProductCard key={index} product={product} items={items}></ProductCard>
-      ))}
+      {products?.length > 0 &&
+        products.map((product, index) => (
+          <ProductCard
+            key={index}
+            product={product}
+            items={items}
+          ></ProductCard>
+        ))}
     </>
   );
 };

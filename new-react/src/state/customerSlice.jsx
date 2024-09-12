@@ -79,11 +79,11 @@ export const updateUserName = createAsyncThunk(
         },
         undefined
       );
-    } catch (exception) {
+    } catch (error) {
       console.error(exception.message);
       return rejectWithValue({
-        message: exception.response?.data || "Failed to update username",
-        status: exception.response?.status,
+        message: error.response?.data || "Failed to update username",
+        status: error.response?.status,
       });
     }
   }
@@ -104,11 +104,11 @@ export const updatePhoneNo = createAsyncThunk(
         },
         undefined
       );
-    } catch (exception) {
+    } catch (error) {
       console.error(exception.message);
       return rejectWithValue({
-        message: exception.response?.data || "Failed to update phone number",
-        status: exception.response?.status,
+        message: error.response?.data || "Failed to update phone number",
+        status: error.response?.status,
       });
     }
   }

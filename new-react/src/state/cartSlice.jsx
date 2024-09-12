@@ -19,11 +19,11 @@ export const fetchCart = createAsyncThunk(
         ...item,
         imgUrl: "http://localhost:8080/images/" + item.product.imgName,
       }));
-    } catch (exception) {
+    } catch (error) {
       console.error(exception.message);
       return rejectWithValue({
-        message: exception.response?.data || "Failed to fetch cart",
-        status: exception.response?.status,
+        message: error.response?.data || "Failed to fetch cart",
+        status: error.response?.status,
       });
     }
   }
@@ -55,11 +55,11 @@ export const updateCart = createAsyncThunk(
         ...item,
         imgUrl: "http://localhost:8080/images/" + item.product.imgName,
       }));
-    } catch (exception) {
+    } catch (error) {
       console.error(exception.message);
       return rejectWithValue({
-        message: exception.response?.data || "Failed to update cart",
-        status: exception.response?.status,
+        message: error.response?.data || "Failed to update cart",
+        status: error.response?.status,
       });
     }
   }
