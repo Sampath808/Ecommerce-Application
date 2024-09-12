@@ -17,11 +17,11 @@ export const getOrder = createAsyncThunk(
         throw new Error("Missing required parameters.");
       }
       return await apiCall("GET", `/order/${orderId}`, {}, undefined);
-    } catch (exception) {
+    } catch (error) {
       console.error(exception.message);
       return rejectWithValue({
-        message: exception.response?.data || "Failed to get order",
-        status: exception.response?.status,
+        message: error.response?.data || "Failed to get order",
+        status: error.response?.status,
       });
     }
   }
@@ -36,11 +36,11 @@ export const updateStatus = createAsyncThunk(
         throw new Error("Missing required parameters.");
       }
       return await apiCall("GET", `/order/statusUpdate/${id}`, {}, undefined);
-    } catch (exception) {
+    } catch (error) {
       console.error(exception.message);
       return rejectWithValue({
-        message: exception.response?.data || "Failed to update status",
-        status: exception.response?.status,
+        message: error.response?.data || "Failed to update status",
+        status: error.response?.status,
       });
     }
   }
@@ -51,11 +51,11 @@ export const fetchOrders = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       return await apiCall("GET", `/orders/` + id, {}, undefined);
-    } catch (exception) {
-      console.error(exception.message);
+    } catch (error) {
+      console.log(error.message);
       return rejectWithValue({
-        message: exception.response?.data || "Failed to get orders",
-        status: exception.response?.status,
+        message: error.response?.data || "Failed to get orders",
+        status: error.response?.status,
       });
     }
   }
@@ -89,11 +89,11 @@ export const placeOrder = createAsyncThunk(
         },
         undefined
       );
-    } catch (exception) {
-      console.error(exception.message);
+    } catch (error) {
+      console.log(error.message);
       return rejectWithValue({
-        message: exception.response?.data || "Failed to place order",
-        status: exception.response?.status,
+        message: error.response?.data || "Failed to place order",
+        status: error.response?.status,
       });
     }
   }
