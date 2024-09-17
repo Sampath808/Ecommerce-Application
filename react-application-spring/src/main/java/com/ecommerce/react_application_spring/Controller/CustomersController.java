@@ -2,7 +2,6 @@ package com.ecommerce.react_application_spring.Controller;
 
 
 import com.ecommerce.react_application_spring.Model.Customers;
-import com.ecommerce.react_application_spring.Model.Orders;
 import com.ecommerce.react_application_spring.Model.RequestCustomerDTO;
 import com.ecommerce.react_application_spring.Service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
