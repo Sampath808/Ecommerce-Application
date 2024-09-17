@@ -5,29 +5,40 @@ import "./index.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { decodeToken } from "./services/JwtDecode";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { setUser } from "./state/customerSlice";
 
 function AppNavbar() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const cartError = useSelector((state) => state.cart.error);
-  const orderError = useSelector((state) => state.order.error);
-  const customerError = useSelector((state) => state.customer.error);
-  const productError = useSelector((state) => state.products.error);
+  const cartErrorStatus = useSelector((state) => state.cart.error?.status);
+  const orderErrorStatus = useSelector((state) => state.order.error?.status);
+  const customerErrorStatus = useSelector(
+    (state) => state.customer.error?.status
+  );
+  const productErrorStatus = useSelector(
+    (state) => state.products.error?.status
+  );
 
   useEffect(() => {
+    // console.log("proErr: ", productError);
+    // console.log("Type of proError.status: ", typeof productError?.status);
     if (
-      cartError?.status == 403 ||
-      orderError?.status == 403 ||
-      customerError?.status == 403 ||
-      productError?.status == 403
+      cartErrorStatus == 403 ||
+      orderErrorStatus == 403 ||
+      customerErrorStatus == 403 ||
+      productErrorStatus == 403
     ) {
-      console.error("Unauthorized user exception, Logging off...");
+      console.log("Unauthorized user exception, Logging off...");
       localStorage.removeItem("jwtToken");
       navigate("/login");
     }
-  }, [cartError, orderError, customerError, productError]);
+  }, [
+    cartErrorStatus,
+    orderErrorStatus,
+    customerErrorStatus,
+    productErrorStatus,
+  ]);
 
   useEffect(() => {
     const token = localStorage.getItem("jwtToken");

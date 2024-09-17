@@ -6,6 +6,7 @@ const initialState = {
   status: "idle",
   error: null,
 };
+
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async (_, { rejectWithValue }) => {
@@ -15,11 +16,11 @@ export const fetchProducts = createAsyncThunk(
         ...product,
         imgUrl: "http://localhost:8080/images/" + product.imgUrl,
       }));
-    } catch (exception) {
-      console.error(exception.message);
+    } catch (error) {
+      console.error(error.message);
       return rejectWithValue({
-        message: exception.response?.data || "Failed to fetch products",
-        status: exception.response?.status,
+        message: error.response?.data || "Failed to fetch products",
+        status: error.response?.status,
       });
     }
   }

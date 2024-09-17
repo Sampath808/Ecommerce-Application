@@ -17,7 +17,7 @@ public class Customers implements UserDetails  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String userName;
+    private String fullName;
     private String phoneNo;
     private String email;
     private String password;
@@ -62,8 +62,8 @@ public class Customers implements UserDetails  {
         return true;
     }
 
-    public Customers(String userName, String phoneNo, String email, String password, String state) {
-        this.userName = userName;
+    public Customers(String fullName, String phoneNo, String email, String password, String state) {
+        this.fullName = fullName;
         this.phoneNo = phoneNo;
         this.email = email;
         this.password = password;
@@ -74,12 +74,12 @@ public class Customers implements UserDetails  {
 
     }
 
-    public String getUserName() {
-        return userName;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getState() {
@@ -123,7 +123,7 @@ public class Customers implements UserDetails  {
     }
     @Override
     public String toString() {
-        return "Customers [id=" + id + ", userName=" + userName + ", phoneNo=" + phoneNo + ", email=" + email
+        return "Customers [id=" + id + ", fullName=" + fullName + ", phoneNo=" + phoneNo + ", email=" + email
                 + ", password=" + password + ", state=" + state + ", createdAt=" + createdAt + ", updatedAt="
                 + updatedAt + ", isAccountNonExpired()=" + isAccountNonExpired() + ", isAccountNonLocked()="
                 + isAccountNonLocked() + ", isCredentialsNonExpired()=" + isCredentialsNonExpired() + "]";

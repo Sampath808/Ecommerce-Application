@@ -64,6 +64,7 @@ public class JwtService {
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
+    
     private String buildToken(
             Claims extraClaims,
             UserDetails userDetails,

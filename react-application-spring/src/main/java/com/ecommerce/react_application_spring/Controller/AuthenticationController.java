@@ -44,6 +44,7 @@ public class AuthenticationController {
 
         Map<String, Object> claims = new HashMap<>();
         claims.put("name", authenticatedCustomer.getUsername());
+        claims.put("fullName", authenticatedCustomer.getFullName());
         claims.put("phoneNo", authenticatedCustomer.getPhoneNo());
         claims.put("id", authenticatedCustomer.getId());
         String jwtToken = jwtService.generateToken(claims, authenticatedCustomer);

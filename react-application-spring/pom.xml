@@ -45,6 +45,21 @@
 			<type>test-jar</type>
 		</dependency>
 
+
+		<dependency>
+			<groupId>com.amazonaws.serverless</groupId>
+			<artifactId>aws-serverless-java-container-springboot3</artifactId>
+			<version>2.0.2</version> 
+		</dependency>
+
+		<dependency>
+			<groupId>com.amazonaws.serverless</groupId>
+			<artifactId>aws-serverless-java-container-core</artifactId>
+			<version>2.0.2</version> 
+			<classifier>tests</classifier>
+			<type>test-jar</type>
+		</dependency>
+
 		<dependency>
 			<groupId>com.fasterxml.uuid</groupId>
 			<artifactId>java-uuid-generator</artifactId>
