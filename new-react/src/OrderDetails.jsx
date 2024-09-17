@@ -76,13 +76,9 @@ const OrderDetails = () => {
               <MDBCol lg="10" xl="8">
                 <MDBCard style={{ borderRadius: "10px" }}>
                   <MDBCardHeader className="px-4 py-5">
-                    {/* <MDBTypography tag="h5" className="text-muted mb-0">
-                    Thanks for your Order,{" "}
-                    <span style={{ color: "#a8729a" }}>
-                      {order.customer.userName}
-                    </span>
-                    !
-                  </MDBTypography> */}
+                    <MDBTypography tag="h5" className="text-muted mb-0">
+                      Thanks for your Order!
+                    </MDBTypography>
                   </MDBCardHeader>
                   <MDBCardBody className="p-4">
                     <div className="d-flex justify-content-between align-items-center mb-4">
@@ -93,10 +89,31 @@ const OrderDetails = () => {
                         Receipt
                       </p>
                     </div>
+                    <MDBRow className="justify-content-around">
+                      <MDBCol
+                        md="2"
+                        className="text-center d-flex justify-content-center align-items-center"
+                      >
+                        Product Details
+                      </MDBCol>
+                      <MDBCol
+                        md="2"
+                        className="text-center d-flex justify-content-center align-items-center"
+                      >
+                        Quantity
+                      </MDBCol>
+                      <MDBCol
+                        md="2"
+                        className="text-center d-flex justify-content-center align-items-center"
+                      >
+                        Price
+                      </MDBCol>
+                    </MDBRow>
+
                     {order?.orderItems.map((orderItems, index) => (
                       <MDBCard key={index} className="shadow-0 border mb-4">
                         <MDBCardBody>
-                          <MDBRow>
+                          <MDBRow className="justify-content-around">
                             <MDBCol
                               md="2"
                               className="text-center d-flex justify-content-center align-items-center"
@@ -123,24 +140,13 @@ const OrderDetails = () => {
                               </p>
                             </MDBCol>
                           </MDBRow>
-                          <hr
-                            className="mb-4"
-                            style={{ backgroundColor: "#e0e0e0", opacity: 1 }}
-                          />
-                          <MDBRow className="align-items-center">
-                            <MDBCol md="2">
-                              <p className="text-muted mb-0 small">
-                                Track Order
-                              </p>
-                            </MDBCol>
-                          </MDBRow>
                         </MDBCardBody>
                       </MDBCard>
                     ))}
                     <div className="d-flex justify-content-between pt-2">
                       <p className="fw-bold mb-0">Order Details</p>
                       <p className="text-muted mb-0">
-                        <span className="fw-bold me-4">Total</span> Rs.
+                        <span className="fw-bold me-4">Total:</span> Rs.
                         {order?.amount}.0
                       </p>
                     </div>
@@ -162,7 +168,7 @@ const OrderDetails = () => {
                         Payment Type : {order?.paymentType}
                       </p>
                       <p className="text-muted mb-0">
-                        <span className="fw-bold me-4">Delivery Charges</span>{" "}
+                        <span className="fw-bold me-4">Delivery Charges:</span>{" "}
                         Free
                       </p>
                     </div>
@@ -193,7 +199,7 @@ const OrderDetails = () => {
                       className="d-flex align-items-center justify-content-end text-white text-uppercase mb-0"
                     >
                       Total paid:{" "}
-                      <span className="h2 mb-0 ms-2">{order.amount}</span>
+                      <span className="h2 mb-0 ms-2">Rs.{order.amount}.0</span>
                     </MDBTypography>
                   </MDBCardFooter>
                 </MDBCard>
