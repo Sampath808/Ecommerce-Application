@@ -1,13 +1,7 @@
 import Home from "./Home";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CartPage from "./CartPage";
 import "mdb-react-ui-kit/dist/css/mdb.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -19,8 +13,6 @@ import LayoutWithNavbar from "./LayOutWithNavbar";
 import ProfilePage from "./ProfilePage";
 
 function AppWrapper() {
-  const location = useLocation();
-
   return (
     <Routes>
       {/* Routes with Navbar */}
