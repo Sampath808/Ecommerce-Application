@@ -1,7 +1,7 @@
 name: Deploy to AWS ECS
 on:
   push:
-    branches: [development]
+    branches: [main]
 jobs:
   build-and-deploy:
     runs-on: [ubuntu-latest]
@@ -16,7 +16,7 @@ jobs:
           java-version: "21"
 
       - name: Build Project
-        run: mvn clean install -DskipTests
+        run: mvn clean install -DskipTests.profiles.active=dev
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
