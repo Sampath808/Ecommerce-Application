@@ -21,7 +21,8 @@
       "name": "ReactApplicationSpring",
       "request": "launch",
       "mainClass": "com.ecommerce.react_application_spring.ReactApplicationSpring",
-      "projectName": "react-application-spring"
+      "projectName": "react-application-spring",
+      "args": "--spring.profiles.active=local"
     }
   ]
 }
