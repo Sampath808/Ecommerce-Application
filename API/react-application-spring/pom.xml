@@ -32,20 +32,11 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>com.amazonaws.serverless</groupId>
-			<artifactId>aws-serverless-java-container-springboot3</artifactId>
-			<version>2.0.2</version> 
+			<groupId>com.mysql</groupId>
+			<artifactId>mysql-connector-j</artifactId>
+			<scope>runtime</scope>
 		</dependency>
-
-		<dependency>
-			<groupId>com.amazonaws.serverless</groupId>
-			<artifactId>aws-serverless-java-container-core</artifactId>
-			<version>2.0.2</version> 
-			<classifier>tests</classifier>
-			<type>test-jar</type>
-		</dependency>
-
-
+		
 		<dependency>
 			<groupId>com.amazonaws.serverless</groupId>
 			<artifactId>aws-serverless-java-container-springboot3</artifactId>

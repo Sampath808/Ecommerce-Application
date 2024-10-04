@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "ReactApplicationSpring",
+      "request": "launch",
+      "mainClass": "com.ecommerce.react_application_spring.ReactApplicationSpring",
+      "projectName": ""
+    },
+    {
+      "type": "java",
       "name": "Launch Current File",
       "request": "launch",
       "mainClass": "${file}"

@@ -1,5 +1,6 @@
 {
   "java.compile.nullAnalysis.mode": "disabled",
   "terminal.integrated.cwd": "E:/Ecommerce_Application",
-  "java.configuration.updateBuildConfiguration": "automatic"
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.debug.settings.onBuildFailureProceed": true
 }
