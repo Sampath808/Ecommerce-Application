@@ -152,5 +152,6 @@ const customerSlice = createSlice({
       });
   },
 });
+
 export const { setUser, clearUser } = customerSlice.actions;
 export default customerSlice.reducer;

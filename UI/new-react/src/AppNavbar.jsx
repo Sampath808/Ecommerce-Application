@@ -21,8 +21,6 @@ function AppNavbar() {
   );
 
   useEffect(() => {
-    // console.log("proErr: ", productError);
-    // console.log("Type of proError.status: ", typeof productError?.status);
     if (
       cartErrorStatus == 403 ||
       orderErrorStatus == 403 ||

@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 
 function Signup() {
   const { status } = useSelector((state) => state.customer);
+
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
